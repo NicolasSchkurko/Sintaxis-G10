@@ -1,0 +1,2 @@
+# Sintaxis
+Sintaxis G10
