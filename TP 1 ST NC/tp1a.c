@@ -1,5 +1,6 @@
 #include <stdio.h> // printf /
 #include <ctype.h> // isdigit /
+#include <stdbool.h>
 
 bool Verifica(char*);  // que los caracteres pertenezcan al alfabeto /
 int Columna(int);  //dado un caracter, determina la columna  /
@@ -7,7 +8,7 @@ int EsPalabra(const char*);
 
 int main()
 {
-    char s1[] = "14+-8";
+    char s1[] = "14+8";
     printf("Este programa prueba un AFD que determina\n");
     printf("si una cadena dada corresponde a un numero entero\n\n");
     if (!Verifica(s1))
