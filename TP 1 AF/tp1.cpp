@@ -1,64 +1,33 @@
-#include <stdio.h> // printf /
-#include <ctype.h> // isdigit /
+#include <stdio.h>
 
+int esExpresionAritmetica (char []);
+int obtenerColumna (char);
 
-void Titulo (void);   // funcion auxiliar /
-int Verifica (char);  // que los caracteres pertenezcan al alfabeto /
-int Columna (int);  //dado un caracter, determina la columna  /
-int EsPalabra (const char);
-
-int main ()
-{
-    char s1[] = "14-5";
-    Titulo();
-    if (! Verifica(s1))
-        printf("La cadena s1 tiene caracteres invalidos\n");
+int main (){
+    char cadenaIngresada[] = "x";
+    if(esExpresionAritmetica(cadenaIngresada) == 1)
+        printf("se trata de una expresion aritmetica");
     else
-        if (EsPalabra(s1))
-            printf("La cadena s1 pertenece al lenguaje\n");
-        else
-            printf("La cadena s1 no pertenece al lenguaje\n");
-    return 0;
-} //* fin main /
+        printf("no es una expresion aritmetica");
+}
 
-void Titulo (void)
-{
-    printf("Este programa prueba un AFD que determina\n");
-    printf("si una cadena dada corresponde a un numero entero\n\n");
-} // fin Titulo /
+int esExpresionAritmetica (char cadena[]){
 
-int Verifica (chars)
-{
-    unsigned i;
-    for (i=0; s[i] != '\0'; i++)
-        if (isletter)
-            return 1;
-    return 0;
-} //* fin Verifica /
-
-int Columna (int c)
-{
-    switch (c)
-    {
-        case '+':
-            return 1;
-        case '-':
-            return 2;
-        default / es digito /:
-            return 0;
+    static int tablaTransiciones [4][4]= {{1,3,3,3}, //0
+                                        {1,2,2,3},
+                                        {1,3,3,3},
+                                        {3,3,3,3}};
+    int estadoActual;
+    unsigned int i;
+    for(estadoActual = 0, i = 0; cadena[i] != '\0' && estadoActual != 3; i++){
+        estadoActual = tablaTransiciones [estadoActual][obtenerColumna(cadena[i])];
     }
-} // fin Columna /
+    return estadoActual;
+}
 
-int EsPalabra (const charcadena)
-{
-    static int tt [4][4] =
-                {{1,3,3,3}, //* Tabla de Transiciones /
-                {1,2,2,3}, // 2 es el estado final /
-                {1,3,3,3}, // 3 es el estado de rechazo /
-                {3,3,3,3}};
-    int e; // estado actual del automata /
-    unsigned int i; // recorre la cadena /
-    for (e=0,i=0; cadena[i]!='\0' && e!=3; i++)
-        e = tt [e][Columna(cadena[i])];
-    return e==2;    // estado final? retorna 1 /
-}  //fin EsPalabra2 */
+int obtenerColumna (char caracter){
+    if(caracter == '+') return 1;
+    if(caracter == '-') return 2;
+    if(caracter >= '0' && caracter <= '9') return 0;
+    else return 3; 
+}
