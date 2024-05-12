@@ -50,7 +50,7 @@ int EsPalabra(const char *cadena)
                 {1,3,3,3},          // 3 es el estado de rechazo /
                 {3,3,3,3}};
     int e; // estado actual del automata /
-    __UINT_FAST16_TYPE__ i; // recorre la cadena /
+    int i; // recorre la cadena /
     for (e = 0, i = 0; cadena[i] != '\0' && e != 3; i++)
         e = tt[e][Columna(cadena[i])];
     return e == 1;    // estado final? retorna 1 /
