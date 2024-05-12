@@ -7,7 +7,7 @@ int EsPalabra(const char*);
 
 int main()
 {
-    char s1[] = "14-8";
+    char s1[] = "14+-8";
     printf("Este programa prueba un AFD que determina\n");
     printf("si una cadena dada corresponde a un numero entero\n\n");
     if (!Verifica(s1))
@@ -36,7 +36,7 @@ int Columna(int c)
         case '+':
             return 1;
         case '-':
-            return 2;
+            return 1;
         default: /// es digito
             return 0;
     }
@@ -44,11 +44,11 @@ int Columna(int c)
 
 int EsPalabra(const char *cadena)
 {
-    static int tt[4][4] ={
-                {1,3,3,3},          //* Tabla de Transiciones /
-                {1,2,2,3},          // 2 es el estado final /
-                {1,3,3,3},          // 3 es el estado de rechazo /
-                {3,3,3,3}};
+    static int tt[4][3] ={
+                {1,3,3},          //* Tabla de Transiciones /
+                {1,2,3},          // 2 es el estado final /
+                {1,3,3},          // 3 es el estado de rechazo /
+                {3,3,3}};
     int e; // estado actual del automata /
     int i; // recorre la cadena /
     for (e = 0, i = 0; cadena[i] != '\0' && e != 3; i++)
