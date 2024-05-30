@@ -1,0 +1,13 @@
+//Array dinamico de dos dimensiones -> [][]
+int **matriz = (int **)malloc(fila * sizeof(int *));
+for (int i = 0; i < fila; i++) {
+    matriz[i] = (int *)malloc(columna * sizeof(int));
+}
+//Array dinamico de una dimension -> []
+int *array = (int *)malloc(largo * sizeof(int));
+for(int x = 0; x < s_r;x++){
+    array[x] = 0;
+}
+
+// g++ file.c -o file.exe (crea o actualiza el archivo)
+// ./file.exe (ejecuta el archivo)
