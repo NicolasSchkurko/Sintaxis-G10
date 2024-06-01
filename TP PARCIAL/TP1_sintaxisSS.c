@@ -4,7 +4,6 @@
 int letraRepetida(char cadena[], char letra);
 int obtenerColumna(int c, char letra);
 
-
 int main (){
     char caracter_e = 'a';
     
