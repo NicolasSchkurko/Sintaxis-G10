@@ -10,7 +10,7 @@ Finalmente, para obtener un 10, deberán agregar un operador multiplicativo. ¿E
 */
 
 
-/* Compilador del Lenguaje Micro (Fischer)	*/
+/* Compilador del Lenguaje Micro (Fischer)	aa*/ 
 #include "scanner.h"
 
 
