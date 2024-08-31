@@ -13,10 +13,7 @@ Finalmente, para obtener un 10, deberán agregar un operador multiplicativo. ¿E
 /* Compilador del Lenguaje Micro (Fischer)	*/
 #include "scanner.h"
 
-#define NUMESTADOS 15
-#define NUMCOLS 13
-#define TAMLEX 32+1
-#define TAMNOM 20+1
+
 /******************Declaraciones Globales*************************/
 
 FILE * in;

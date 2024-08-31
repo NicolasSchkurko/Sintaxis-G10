@@ -1,7 +1,12 @@
-#include "stdio.h"
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 
+
+#define NUMESTADOS 15
+#define NUMCOLS 13
+#define TAMLEX 32+1
+#define TAMNOM 20+1
 
 typedef enum
 {
