@@ -18,22 +18,22 @@ Finalmente, para obtener un 10, deberán agregar un operador multiplicativo. ¿E
 
 FILE * in;
 
-
 char buffer[TAMLEX];
 TOKEN tokenActual;
 int flagToken = 0;
 
-
-
 /***************************Programa Principal************************/
-
+/*ingresamos por la linea de comando el nombre del archivo ("codigo fuente" argv[1]) y el ejecutable (./scanner.c) y argc 
+cuenta cuantos parametros ingresamos (el ejecutable cuenta siendo argv[0])*/
 int main(int argc, char * argv[])
 {
  TOKEN tok;
- char nomArchi[TAMNOM];
- int l;
+ char nombreArchivo[TAMNOM];
+ int largoNombreArchivo;
+
 
 /***************************Se abre el Archivo Fuente******************/
+//./sanner.c ESO.m
  if ( argc == 1 )
  {
   printf("Debe ingresar el nombre del archivo fuente (en lenguaje Micro) en la linea de comandos\n");
@@ -44,20 +44,21 @@ int main(int argc, char * argv[])
   printf("Numero incorrecto de argumentos\n");
   return -1;
  }
- strcpy(nomArchi, argv[1]);
- l = strlen(nomArchi);
- if ( l > TAMNOM )
+ strcpy(nombreArchivo, argv[1]);
+ largoNombreArchivo = strlen(nombreArchivo);
+ if ( largoNombreArchivo > TAMNOM )
  {
   printf("Nombre incorrecto del Archivo Fuente\n");
   return -1;
  }
- if ( nomArchi[l-1] != 'm' || nomArchi[l-2] != '.' )
+ /*Nos asegura que el archivo que mandemos sea "archivo.m" (para micro)*/
+ if ( nombreArchivo[largoNombreArchivo-1] != 'm' || nombreArchivo[largoNombreArchivo-2] != '.' )
  {
   printf("Nombre incorrecto del Archivo Fuente\n");
   return -1;
  }
 
- if ( (in = fopen(nomArchi, "r") ) == NULL )
+ if ( (in = fopen(nombreArchivo, "r") ) == NULL )
  {
   printf("No se pudo abrir archivo fuente\n");
   return -1;
@@ -80,7 +81,7 @@ void Objetivo(void)
 {
  /* <objetivo> -> <programa> FDT #terminar */
 
- Programa();
+ Programa(); /* Inicializaciones Semanticas */
  Match(FDT);
  Terminar();
 }
@@ -89,7 +90,7 @@ void Programa(void)
 {
  /* <programa> -> #comenzar INICIO <listaSentencias> FIN */
 
- Comenzar();
+ Comenzar(); /* Inicializaciones Semanticas */
  Match(INICIO);
  ListaSentencias();
 
@@ -337,11 +338,10 @@ TOKEN ProximoToken()
   if ( tokenActual == ERRORLEXICO ) ErrorLexico();
   flagToken = 1;
   if ( tokenActual == ID )
-  {
-   Buscar(buffer, TS, &tokenActual);
-  }
- }
-
+   {
+      Buscar(buffer, TS, &tokenActual);   //Buscar que hace esta cosa
+   }
+   }
  return tokenActual;
 }
 
@@ -432,7 +432,7 @@ void Terminar(void)
 void Asignar(REG_EXPRESION izq, REG_EXPRESION der)
 {
  /* Genera la instruccion para la asignacion */
-
+   
  Generar("Almacena", Extraer(&der), izq.nombre, "");
 }
 
