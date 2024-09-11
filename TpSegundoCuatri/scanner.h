@@ -17,7 +17,7 @@ typedef struct
  char identifi[TAMLEX];
  TOKEN t;	/* t=0, 1, 2, 3 Palabra Reservada, t=ID=4 Identificador */
 } RegTS;
-RegTS TS[1000] = { {"inicio", INICIO}, {"fin", FIN}, {"leer", LEER}, {"escribir", ESCRIBIR}, {"$", 99} };
+RegTS TS[1000] = { {"inicio", INICIO}, {"fin", FIN}, {"leer", LEER}, {"escribir", ESCRIBIR}, {"$", 99} }; // tabla de simbolos
 
 typedef struct
 {

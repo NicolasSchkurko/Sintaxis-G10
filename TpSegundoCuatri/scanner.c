@@ -407,7 +407,6 @@ void Chequear(char * s)
 {
  /* Si la cadena No esta en la Tabla de Simbolos la agrega,
     y si es el nombre de una variable genera la instruccion */
-
  TOKEN t;
 
  if ( !Buscar(s, TS, &t) )
@@ -463,7 +462,7 @@ TOKEN scanner()
  
  do
  {
-  car = fgetc(in);
+  car = fgetc(in); //toma un caracter del archivo
   col = columna(car);
   estado = tabla[estado][col];
 
@@ -475,7 +474,7 @@ TOKEN scanner()
  }
  while ( !estadoFinal(estado) && !(estado == 14) );
 
- buffer[i] = '\0';
+ buffer[i] = '\0'; //Una vez terminada de leer todas las lineas y habiendo almacenado todo en el buffer, se asigna el ultimo caracter como \0
 
  switch ( estado )
  {
