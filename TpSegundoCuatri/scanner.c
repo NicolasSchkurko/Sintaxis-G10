@@ -33,7 +33,7 @@ int main(int argc, char * argv[])
 
 
 /***************************Se abre el Archivo Fuente******************/
-//./sanner.c ESO.m
+//./sanner.exe ESO.m
  if ( argc == 1 )
  {
   printf("Debe ingresar el nombre del archivo fuente (en lenguaje Micro) en la linea de comandos\n");
@@ -330,17 +330,17 @@ void Match(TOKEN t)
  flagToken = 0;
 }
 
-TOKEN ProximoToken()
+TOKEN ProximoToken() //ver pq chota hay un flag aca
 {
  if ( !flagToken )
  {
   tokenActual = scanner();
   if ( tokenActual == ERRORLEXICO ) ErrorLexico();
+
   flagToken = 1;
-  if ( tokenActual == ID )
-   {
-      Buscar(buffer, TS, &tokenActual);   //Buscar que hace esta cosa
-   }
+
+  if ( tokenActual == ID ) Buscar(buffer, TS, &tokenActual);   //Buscar que hace esta cosa
+   
    }
  return tokenActual;
 }
@@ -437,6 +437,8 @@ void Asignar(REG_EXPRESION izq, REG_EXPRESION der)
 
 /**************************Scanner************************************/
 
+//este scanner es para hacer un analisis descendente y nosotros tenemos que implementar el ascendente usando flex como scanner
+
 TOKEN scanner()
 {
  int tabla[NUMESTADOS][NUMCOLS] = { {  1,  3,  5,  6,  7,  8,  9, 10, 11, 14, 13,  0, 14 },
@@ -524,3 +526,4 @@ int columna(int c)
  return 12;
 }
 /*************Fin Scanner**********************************************/
+
