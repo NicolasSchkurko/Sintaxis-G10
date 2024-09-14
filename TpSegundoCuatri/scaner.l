@@ -14,8 +14,9 @@ LETRA       [a-zA-Z]
 CONSTANTE   {DIGITO}({DIGITO})*
 ID          {LETRA}({LETRA}|{DIGITO})*
 
-%%
 
+%%
+[ \t\n]             ;  // Ignorar espacios en blanco y tabulaciones
 ":="        {return ASIGNACION;}
 ";"         {return PUNTOYCOMA;}
 "inicio"    {return INICIO;}
@@ -25,10 +26,70 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 "+"         {return SUMA;}
 "-"         {return RESTA;} 
 
+
 {ID}    printf( "Un identificador: %s de longitud %d\n", yytext, yyleng);
-// hay que ver si aca se imprime todos los posibles tokens o lo hacemos en el codigo de c
+.                   printf("SIMBOLO DESCONOCIDO: %s\n", yytext);
+
 %%
-int main() {
-yylex();
+int main(int argc, char * argv[]){
+    if (argc > 1) { //Version resumida del verificador de archivo
+        // Abrir el archivo .m
+        FILE *archivo = fopen(argv[1], "r");
+        if (!archivo) {
+            perror("Error al abrir el archivo");
+            return 1;
+        }
+
+        // Establecer el archivo como entrada para Flex
+        yyin = archivo;
+    }
+
+
+    int token;
+
+    while((token = yylex())){
+        switch (token) {
+        case ASIGNACION:
+            printf("ASIGNACION\n");
+            break;
+        case PUNTOYCOMA:
+            printf("PUNTOYCOMA\n");
+            break;
+        case INICIO:
+            printf("Detecta Inicio\n");
+            break;
+        case FIN:
+            printf("Detecta FIN\n");
+            break;
+        case LEER:
+            printf("Lee \n");
+            break;
+        case ESCRIBIR:
+            printf(" ESCRIBIR \n");
+            break;
+        
+        case SUMA:
+            printf("SUMA\n");
+            break;
+        
+        case RESTA:
+            printf("RESTA\n");
+            break;
+            
+        case ID:
+            printf("ID\n");
+            break;
+            
+        case CONSTANTE:
+            printf("CONSTANTE\n");
+            break;
+            
+        default:
+            printf("TOKEN_DESCONOCIDO: %s\n");
+            break;
+    }
+    }
+
+    return 0;
 }
 
