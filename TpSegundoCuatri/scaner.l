@@ -25,7 +25,8 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 "fin"       {return FIN;}
 "+"         {return SUMA;}
 "-"         {return RESTA;} 
-
+")"         {return PARENDERECHO;}
+"("         {return PARENIZQUIERDO;}
 
 {ID}    printf( "Un identificador: %s de longitud %d\n", yytext, yyleng);
 .                   printf("SIMBOLO DESCONOCIDO: %s\n", yytext);
@@ -67,23 +68,24 @@ int main(int argc, char * argv[]){
         case ESCRIBIR:
             printf(" ESCRIBIR \n");
             break;
-        
         case SUMA:
             printf("SUMA\n");
             break;
-        
         case RESTA:
             printf("RESTA\n");
-            break;
-            
+            break;  
         case ID:
             printf("ID\n");
             break;
-            
         case CONSTANTE:
             printf("CONSTANTE\n");
             break;
-            
+        case PARENDERECHO:
+            printf("PARENTESIS DERECHO\n");
+            break;
+        case PARENIZQUIERDO:
+            printf("PARENTESIS IZQUIERDO\n"); 
+            break;
         default:
             printf("TOKEN_DESCONOCIDO: %s\n");
             break;

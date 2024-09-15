@@ -12,7 +12,9 @@ enum tokens {
     SUMA,
     RESTA,
     ID,
-    CONSTANTE
+    CONSTANTE,
+    PARENDERECHO,
+    PARENIZQUIERDO,
 };
 
 #endif /* TOKENS_H */
