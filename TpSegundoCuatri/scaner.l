@@ -17,6 +17,7 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 
 %%
 [ \t\n]             ;  // Ignorar espacios en blanco y tabulaciones
+EOF         {return FDT;}
 ":="        {return ASIGNACION;}
 ";"         {return PUNTOYCOMA;}
 "inicio"    {return INICIO;}
@@ -86,6 +87,8 @@ int main(int argc, char * argv[]){
         case PARENIZQUIERDO:
             printf("PARENTESIS IZQUIERDO\n"); 
             break;
+        case FDT
+            printf("termino el programa en micro\n");
         default:
             printf("TOKEN_DESCONOCIDO: %s\n");
             break;
