@@ -19,26 +19,30 @@ void agregarIdentificador(const char* nombre, int valor);
 
 %}
 
-%tipos{
+
+%union{
     int num;
     char* cadena;
 }
 
-%token <cadena> ID
+%token <cadena> ID 
 %token <num> CONSTANTE
 %token ASIGNACION
+%token COMA
 %token LEER ESCRIBIR
 %token SUMA RESTA
-%token PUNTOCOMA 
+%token PUNTOYCOMA 
 %token INICIO FIN
-%token EOF
+%token FDT
+%token PARENIZQUIERDO PARENDERECHO
 
 %type <num> expresion primaria //tipo de los no terminales
-
+%type <cadena> lista_identificadores lista_expresiones
+ 
 %%
 
 programa:
-    INICIO sentencias FIN EOF { printf("Análisis sintáctico completo\n"); }
+    INICIO sentencias FIN FDT { printf("Análisis sintáctico completo\n"); }
 ;
 
 sentencias:
@@ -47,13 +51,13 @@ sentencias:
 ;
 
 sentencia:
-    LEER '(' lista_identificadores ')' PUNTOCOMA { //el $3 hace referencia al tercer elemento de la produccion de la regla (lista_identificadores)
+    LEER PARENIZQUIERDO lista_identificadores PARENDERECHO PUNTOYCOMA { //el $3 hace referencia al tercer elemento de la produccion de la regla (lista_identificadores)
         printf("Leer variables: %s\n", $3); 
     }
-    | ESCRIBIR '(' lista_expresiones ')' PUNTOCOMA {
+    | ESCRIBIR PARENIZQUIERDO lista_expresiones PARENDERECHO PUNTOYCOMA {
         printf("Escribir valores: %s\n", $3);
     }
-    | ID ASIGNACION expresion PUNTOCOMA {
+    | ID ASIGNACION expresion PUNTOYCOMA {
         int idx = buscarIdentificador($1);
         if (idx == -1) {
             agregarIdentificador($1, $3);
@@ -75,15 +79,13 @@ lista_expresiones:
 ;
 
 expresion:
-    expresion MAS primaria { $$ = $1 + $3; }
-    | expresion MENOS primaria { $$ = $1 - $3; }
-    | expresion MULT primaria { $$ = $1 * $3; }
-    | expresion DIV primaria { $$ = $1 / $3; }
+    expresion SUMA primaria { $$ = $1 + $3; }
+    | expresion RESTA primaria { $$ = $1 - $3; }
     | primaria { $$ = $1; }
 ;
 
 primaria:
-    NUM { $$ = $1; }
+    CONSTANTE { $$ = $1; }
     | ID {
         int idx = buscarIdentificador($1);
         if (idx != -1) {
