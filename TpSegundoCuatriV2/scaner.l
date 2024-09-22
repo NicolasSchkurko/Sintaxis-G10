@@ -4,17 +4,21 @@
 	#include <stdlib.h>
 	#include "y.tab.h"
 	#include <string.h>
+
+	void yyerror(char *s);
+	int yylex();
+	int yylineno;
+	int yylexerrs = 0;
 %}
 
-DIGITO      [0-9]
-LETRA       [a-zA-Z]
-CONSTANTE   {DIGITO}({DIGITO})*
-ID          {LETRA}({LETRA}|{DIGITO})*
+DIGITO      	[0-9]
+LETRA       	[a-zA-Z]
+CONST   		{DIGITO}({DIGITO})*
+IDENTIFICADOR 	{LETRA}({LETRA}|{DIGITO})* 
 
 
 %%
-[ \t\n]             ;  // Ignorar espacios en blanco y tabulaciones
-EOF         {return FDT;}
+EOF        {return FDT;}
 ":="        {return ASIGNACION;}
 ";"         {return PUNTOYCOMA;}
 "inicio"    {return INICIO;}
@@ -25,9 +29,12 @@ EOF         {return FDT;}
 "-"         {return RESTA;} 
 ")"         {return PARENDERECHO;}
 "("         {return PARENIZQUIERDO;}
+{IDENTIFICADOR} {yylval.cadena = strdup(yytext); return ID;}
+{CONST} {yylval.num = atoi(yytext); return CONSTANTE; }
 
-{ID}        {yylval.cadena = strdup(yytext); return ID;}
-{CONSTANTE} {yylval.num = atoi(yytext); return CONSTANTE; }
+\n  { yylineno++; }
+[ \t\n]             ;  // Ignorar espacios en blanco y tabulaciones
+. {yylexerrs++; printf("Error léxico: %s es un carácter inválido\n", yytext); return 0;}
 %%
 
 int yywrap() {
