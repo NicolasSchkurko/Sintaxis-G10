@@ -18,9 +18,9 @@ IDENTIFICADOR {LETRA}({LETRA}|{DIGITO})*
 
 
 %%
-EOF        {return FDT;}
 ":="        {return ASIGNACION;}
 ";"         {return PUNTOYCOMA;}
+","			{return COMA;}
 "inicio"    {return INICIO;}
 "leer"      {return LEER;}
 "escribir"  {return ESCRIBIR;}
@@ -33,7 +33,7 @@ EOF        {return FDT;}
 {CONST} {yylval.num = atoi(yytext); return CONSTANTE; }
 
 \n  { yylineno++; }
-[ \t\n]             ;  // Ignorar espacios en blanco y tabulaciones
+[ \t\nEOF]             ;  // Ignorar espacios en blanco y tabulaciones, EOF ingorado debido a la presencia de "fin"
 . {yylexerrs++; printf("Error léxico: %s es un carácter inválido\n", yytext); return 0;}
 %%
 

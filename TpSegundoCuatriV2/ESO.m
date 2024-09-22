@@ -6,5 +6,6 @@ inicio
 	leer(a);
     hola := 14 ;
     buenas := hola ;
-    leer ( hola ) ;
+	lwl := buenas;
+    leer (456erwer);
 fin

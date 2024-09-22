@@ -70,8 +70,7 @@
 #line 1 "parser.y"
 
 #include <stdio.h>
-#include <stdlib.h> 
-#include <math.h>
+#include <stdlib.h>
 #include <string.h>
 
 extern char *yytext;
@@ -84,8 +83,7 @@ extern int yynerrs;
 extern int yylexerrs;
 extern FILE* yyin;
 
-
-#line 89 "y.tab.c"
+#line 87 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -170,12 +168,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 18 "parser.y"
+#line 17 "parser.y"
 
    char* cadena;
    int num;
 
-#line 179 "y.tab.c"
+#line 177 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -213,16 +211,15 @@ enum yysymbol_kind_t
   YYSYMBOL_ID = 15,                        /* ID  */
   YYSYMBOL_CONSTANTE = 16,                 /* CONSTANTE  */
   YYSYMBOL_YYACCEPT = 17,                  /* $accept  */
-  YYSYMBOL_objetivo = 18,                  /* objetivo  */
-  YYSYMBOL_programa = 19,                  /* programa  */
-  YYSYMBOL_listaSentencias = 20,           /* listaSentencias  */
-  YYSYMBOL_sentencia = 21,                 /* sentencia  */
-  YYSYMBOL_22_1 = 22,                      /* $@1  */
-  YYSYMBOL_listaIds = 23,                  /* listaIds  */
-  YYSYMBOL_listaExpresiones = 24,          /* listaExpresiones  */
-  YYSYMBOL_expresion = 25,                 /* expresion  */
-  YYSYMBOL_operadorAditivo = 26,           /* operadorAditivo  */
-  YYSYMBOL_primaria = 27                   /* primaria  */
+  YYSYMBOL_programa = 18,                  /* programa  */
+  YYSYMBOL_listaSentencias = 19,           /* listaSentencias  */
+  YYSYMBOL_sentencia = 20,                 /* sentencia  */
+  YYSYMBOL_listaIds = 21,                  /* listaIds  */
+  YYSYMBOL_listaExpresiones = 22,          /* listaExpresiones  */
+  YYSYMBOL_expresion = 23,                 /* expresion  */
+  YYSYMBOL_operadorAditivo = 24,           /* operadorAditivo  */
+  YYSYMBOL_primaria = 25,                  /* primaria  */
+  YYSYMBOL_identificador = 26              /* identificador  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -555,11 +552,11 @@ union yyalloc
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  17
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  11
+#define YYNNTS  10
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  20
+#define YYNRULES  19
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  41
+#define YYNSTATES  39
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   271
@@ -610,9 +607,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    29,    29,    31,    33,    34,    36,    36,    37,    38,
-      41,    42,    45,    46,    49,    50,    53,    54,    57,    58,
-      59
+       0,    28,    28,    35,    36,    39,    40,    41,    44,    45,
+      48,    49,    52,    53,    56,    57,    60,    61,    62,    65
 };
 #endif
 
@@ -631,9 +627,9 @@ static const char *const yytname[] =
   "\"end of file\"", "error", "\"invalid token\"", "ASIGNACION",
   "PUNTOYCOMA", "RESTA", "SUMA", "PARENIZQUIERDO", "PARENDERECHO",
   "INICIO", "FIN", "LEER", "ESCRIBIR", "COMA", "FDT", "ID", "CONSTANTE",
-  "$accept", "objetivo", "programa", "listaSentencias", "sentencia", "$@1",
-  "listaIds", "listaExpresiones", "expresion", "operadorAditivo",
-  "primaria", YY_NULLPTR
+  "$accept", "programa", "listaSentencias", "sentencia", "listaIds",
+  "listaExpresiones", "expresion", "operadorAditivo", "primaria",
+  "identificador", YY_NULLPTR
 };
 
 static const char *
@@ -643,7 +639,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-19)
+#define YYPACT_NINF (-14)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -657,11 +653,10 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -4,     3,    16,     7,    22,    23,   -19,    -8,   -19,   -19,
-     -19,    13,    -6,    28,   -19,   -19,   -19,     0,    -6,   -19,
-     -19,     4,    21,   -19,    -6,    29,    17,    14,    30,    -6,
-     -19,   -19,    -6,    19,   -19,   -19,   -19,   -19,    21,   -19,
-     -19
+      -6,    14,    19,    13,    15,   -14,     2,   -14,     5,   -14,
+      20,    -5,   -14,   -14,    -5,     8,   -14,    -5,   -14,    10,
+       1,   -14,   -14,    27,    30,    20,    22,    32,    -5,   -14,
+     -14,    -5,   -14,   -14,   -14,   -14,   -14,     1,   -14
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -669,25 +664,22 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     0,     0,     0,     6,     0,     5,     1,
-       2,     0,     0,     0,     3,     4,    11,     0,     0,    18,
-      19,     0,    13,    14,     0,     0,     0,     0,     0,     0,
-      17,    16,     0,     0,     8,    10,    20,     9,    12,    15,
-       7
+       0,     0,     0,     0,     0,    19,     0,     4,     0,     1,
+       0,     0,     2,     3,     0,     0,     9,     0,    17,     0,
+      11,    12,    16,     0,     0,     0,     0,     0,     0,    15,
+      14,     0,     5,     6,     8,    18,     7,    10,    13
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -19,   -19,   -19,   -19,    31,   -19,   -19,   -19,   -18,   -19,
-       5
+     -14,   -14,   -14,    31,   -14,   -14,   -13,   -14,     7,    -1
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     3,     7,     8,    13,    17,    21,    22,    32,
-      23
+       0,     2,     6,     7,    15,    19,    20,    31,    21,    22
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -695,45 +687,42 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      27,    18,    14,     4,     5,     1,    33,     6,    25,    19,
-      20,    38,    28,    26,     4,     5,     9,    29,     6,    30,
-      31,    10,    36,    40,    30,    31,    30,    31,    16,    11,
-      12,    24,    35,    34,    37,     0,     0,    39,    15
+       8,    23,    17,     1,    26,     8,    29,    30,    14,    16,
+       5,    18,    12,     3,     4,    37,    24,     5,    27,     9,
+      10,    25,    11,    28,    34,     3,     4,    29,    30,     5,
+      35,    32,    29,    30,    33,     5,    36,    13,    38
 };
 
 static const yytype_int8 yycheck[] =
 {
-      18,     7,    10,    11,    12,     9,    24,    15,     8,    15,
-      16,    29,     8,    13,    11,    12,     0,    13,    15,     5,
-       6,    14,     8,     4,     5,     6,     5,     6,    15,     7,
-       7,     3,    15,     4,     4,    -1,    -1,    32,     7
+       1,    14,     7,     9,    17,     6,     5,     6,     3,    10,
+      15,    16,    10,    11,    12,    28,     8,    15,     8,     0,
+       7,    13,     7,    13,    25,    11,    12,     5,     6,    15,
+       8,     4,     5,     6,     4,    15,     4,     6,    31
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     9,    18,    19,    11,    12,    15,    20,    21,     0,
-      14,     7,     7,    22,    10,    21,    15,    23,     7,    15,
-      16,    24,    25,    27,     3,     8,    13,    25,     8,    13,
-       5,     6,    26,    25,     4,    15,     8,     4,    25,    27,
-       4
+       0,     9,    18,    11,    12,    15,    19,    20,    26,     0,
+       7,     7,    10,    20,     3,    21,    26,     7,    16,    22,
+      23,    25,    26,    23,     8,    13,    23,     8,    13,     5,
+       6,    24,     4,     4,    26,     8,     4,    23,    25
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    17,    18,    19,    20,    20,    22,    21,    21,    21,
-      23,    23,    24,    24,    25,    25,    26,    26,    27,    27,
-      27
+       0,    17,    18,    19,    19,    20,    20,    20,    21,    21,
+      22,    22,    23,    23,    24,    24,    25,    25,    25,    26
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     2,     3,     2,     1,     0,     5,     5,     5,
-       3,     1,     3,     1,     1,     3,     1,     1,     1,     1,
-       3
+       0,     2,     3,     2,     1,     4,     5,     5,     3,     1,
+       3,     1,     1,     3,     1,     1,     1,     1,     3,     1
 };
 
 
@@ -1196,14 +1185,29 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 6: /* $@1: %empty  */
-#line 36 "parser.y"
-              {if(yyleng>32){ printf("Error lexico: se excedio la longitud maxima para un identificador"); yylexerrs++;}}
-#line 1203 "y.tab.c"
+  case 2: /* programa: INICIO listaSentencias FIN  */
+#line 28 "parser.y"
+                                     {
+    if (yynerrs || yylexerrs) {
+        YYABORT;
+    }
+}
+#line 1196 "y.tab.c"
+    break;
+
+  case 19: /* identificador: ID  */
+#line 65 "parser.y"
+                  {
+    if (yyleng > 32) {
+        printf("Error lexico en la línea %d: se excedió la longitud máxima de 32 caracteres para un identificador -> '%s'\n", yylineno, yytext);
+        yylexerrs++;
+    }
+}
+#line 1207 "y.tab.c"
     break;
 
 
-#line 1207 "y.tab.c"
+#line 1211 "y.tab.c"
 
       default: break;
     }
@@ -1396,53 +1400,47 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 63 "parser.y"
+#line 73 "parser.y"
 
 
-int main(int argc, char** argv) 
-{
+int main(int argc, char** argv) {
+    if (argc == 1) {
+        printf("Debe ingresar el nombre del archivo fuente (en lenguaje Micro) en la línea de comandos\n");
+        return -1;
+    } else if (argc != 2) {
+        printf("Número incorrecto de argumentos\n");
+        return -1;
+    }
+    
+    char filename[50];
+    sprintf(filename, "%s", argv[1]);
+    int largo = strlen(filename);
 
-   if ( argc == 1 )
-   {
-      printf("Debe ingresar el nombre del archivo fuente (en lenguaje Micro) en la linea de comandos\n");
-      return -1;
-   }
-   else if ( argc != 2 )
-   {
-      printf("Numero incorrecto de argumentos\n");
-      return -1;
-   }
-   char filename[50];
-   sprintf(filename, "%s", argv[1]);
-   int largo = strlen(filename);
+    if (argv[1][largo - 1] != 'm' || argv[1][largo - 2] != '.') {
+        printf("Extensión incorrecta (debe ser .m)\n");
+        return EXIT_FAILURE;
+    }
 
-   if (argv[1][largo-1] != 'm' || argv[1][largo-2] != '.') {
-      printf("Extension incorrecta (debe ser .m)");
-      return EXIT_FAILURE;
-   }
+    yyin = fopen(filename, "r");
+    if (yyin == NULL) {
+        perror("Error al abrir el archivo");
+        return EXIT_FAILURE;
+    }
 
-   yyin = fopen(filename, "r");
-   if (yyin == NULL) {
-      perror("Error al abrir el archivo");
-      return EXIT_FAILURE;
-   }
-   
-   switch (yyparse()){
-      case 0: printf("\nProceso de compilacion termino exitosamente");
-      break;
-      case 1: printf("\nErrores en la compilacion");
-      break;
-      case 2: printf("\nNo hay memoria suficiente");
-      break;
-   }
-   printf("\nErrores sintacticos: %i\tErrores lexicos: %i\n", yynerrs, yylexerrs);
-   fclose(yyin);
-   return 0;
+    switch (yyparse()) {
+        case 0: printf("\nProceso de compilación terminó exitosamente\n"); break;
+        case 1: printf("\nErrores en la compilación\n"); break;
+        case 2: printf("\nNo hay memoria suficiente\n"); break;
+    }
+
+    printf("\nErrores sintácticos: %i\tErrores léxicos: %i\n", yynerrs, yylexerrs);
+    fclose(yyin);
+    return 0;
 }
 
 void yyerror(char *s) {
     fprintf(stderr, "\nError sintáctico: %s en la línea %d\n", s, yylineno);
-      if (yytext) {
+    if (yytext) {
         fprintf(stderr, "                  -> Provocado por el token: %s\n", yytext);
     }
 }
