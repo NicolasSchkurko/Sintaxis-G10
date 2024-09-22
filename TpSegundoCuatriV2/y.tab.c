@@ -607,8 +607,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    28,    28,    35,    36,    39,    40,    41,    44,    45,
-      48,    49,    52,    53,    56,    57,    60,    61,    62,    65
+       0,    28,    28,    31,    32,    35,    36,    37,    40,    41,
+      44,    45,    48,    49,    52,    53,    56,    57,    58,    61
 };
 #endif
 
@@ -1185,29 +1185,19 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* programa: INICIO listaSentencias FIN  */
-#line 28 "parser.y"
-                                     {
-    if (yynerrs || yylexerrs) {
-        YYABORT;
-    }
-}
-#line 1196 "y.tab.c"
-    break;
-
   case 19: /* identificador: ID  */
-#line 65 "parser.y"
+#line 61 "parser.y"
                   {
     if (yyleng > 32) {
         printf("Error lexico en la línea %d: se excedió la longitud máxima de 32 caracteres para un identificador -> '%s'\n", yylineno, yytext);
         yylexerrs++;
     }
 }
-#line 1207 "y.tab.c"
+#line 1197 "y.tab.c"
     break;
 
 
-#line 1211 "y.tab.c"
+#line 1201 "y.tab.c"
 
       default: break;
     }
@@ -1400,15 +1390,15 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 73 "parser.y"
+#line 69 "parser.y"
 
 
 int main(int argc, char** argv) {
     if (argc == 1) {
-        printf("Debe ingresar el nombre del archivo fuente (en lenguaje Micro) en la línea de comandos\n");
+        printf("Debe ingresar el nombre del archivo fuente (en lenguaje Micro) en la linea de comandos\n");
         return -1;
     } else if (argc != 2) {
-        printf("Número incorrecto de argumentos\n");
+        printf("Numero incorrecto de argumentos\n");
         return -1;
     }
     
@@ -1417,7 +1407,7 @@ int main(int argc, char** argv) {
     int largo = strlen(filename);
 
     if (argv[1][largo - 1] != 'm' || argv[1][largo - 2] != '.') {
-        printf("Extensión incorrecta (debe ser .m)\n");
+        printf("Extension incorrecta (debe ser .m)\n");
         return EXIT_FAILURE;
     }
 
@@ -1428,18 +1418,18 @@ int main(int argc, char** argv) {
     }
 
     switch (yyparse()) {
-        case 0: printf("\nProceso de compilación terminó exitosamente\n"); break;
-        case 1: printf("\nErrores en la compilación\n"); break;
+        case 0: printf("\nProceso de compilación termino exitosamente\n"); break;
+        case 1: printf("\nErrores en la compilacion\n"); break;
         case 2: printf("\nNo hay memoria suficiente\n"); break;
     }
 
-    printf("\nErrores sintácticos: %i\tErrores léxicos: %i\n", yynerrs, yylexerrs);
+    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\n", yynerrs, yylexerrs);
     fclose(yyin);
     return 0;
 }
 
 void yyerror(char *s) {
-    fprintf(stderr, "\nError sintáctico: %s en la línea %d\n", s, yylineno);
+    fprintf(stderr, "\nError sintactico: %s en la linea %d\n", s, yylineno);
     if (yytext) {
         fprintf(stderr, "                  -> Provocado por el token: %s\n", yytext);
     }
