@@ -74,10 +74,10 @@ identificador: ID {
 
 int main(int argc, char** argv) {
     if (argc == 1) {
-        printf("Debe ingresar el nombre del archivo fuente (en lenguaje Micro) en la línea de comandos\n");
+        printf("Debe ingresar el nombre del archivo fuente (en lenguaje Micro) en la linea de comandos\n");
         return -1;
     } else if (argc != 2) {
-        printf("Número incorrecto de argumentos\n");
+        printf("Numero incorrecto de argumentos\n");
         return -1;
     }
     
@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
     int largo = strlen(filename);
 
     if (argv[1][largo - 1] != 'm' || argv[1][largo - 2] != '.') {
-        printf("Extensión incorrecta (debe ser .m)\n");
+        printf("Extension incorrecta (debe ser .m)\n");
         return EXIT_FAILURE;
     }
 
@@ -97,18 +97,18 @@ int main(int argc, char** argv) {
     }
 
     switch (yyparse()) {
-        case 0: printf("\nProceso de compilación terminó exitosamente\n"); break;
-        case 1: printf("\nErrores en la compilación\n"); break;
+        case 0: printf("\nProceso de compilación termino exitosamente\n"); break;
+        case 1: printf("\nErrores en la compilacion\n"); break;
         case 2: printf("\nNo hay memoria suficiente\n"); break;
     }
 
-    printf("\nErrores sintácticos: %i\tErrores léxicos: %i\n", yynerrs, yylexerrs);
+    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\n", yynerrs, yylexerrs);
     fclose(yyin);
     return 0;
 }
 
 void yyerror(char *s) {
-    fprintf(stderr, "\nError sintáctico: %s en la línea %d\n", s, yylineno);
+    fprintf(stderr, "\nError sintactico: %s en la linea %d\n", s, yylineno);
     if (yytext) {
         fprintf(stderr, "                  -> Provocado por el token: %s\n", yytext);
     }

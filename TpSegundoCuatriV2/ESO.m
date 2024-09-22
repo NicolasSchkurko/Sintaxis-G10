@@ -7,5 +7,5 @@ inicio
     hola := 14 ;
     buenas := hola ;
 	lwl := buenas;
-    leer (456erwer);
+    leer (45adasdaiknm2);
 fin
