@@ -1,13 +1,10 @@
 inicio
 	a := 23;
+	b:= 4;
 	leer(a,b);
-	45asd ;
 	cc:= a + (b-2);
-	p:=a-s;
-	escribir(cc,a+4 6734);
+	p:=a-452asasd;
+	escribir(cc,a+4);
 	leer(a);
-    hola := 14 ;
-    buenas := hola ;
-	lwl := buenas;
-    leer (asd);
+    leer(asd);
 fin

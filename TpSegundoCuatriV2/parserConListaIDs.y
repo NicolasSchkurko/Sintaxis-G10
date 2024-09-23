@@ -7,12 +7,21 @@ extern char *yytext;
 extern int yyleng;
 extern int yylex(void);
 extern void yyerror(char*);
+void asignarIds(char* nombre, int valor);
 
 extern int yylineno;
 extern int yynerrs;
 extern int yylexerrs;
 extern FILE* yyin;
+
+struct Identificador{
+   char* nombre;
+   int valor;
+}; 
+struct Identificador listaIdentificadores[80];
+int cantidadIdentificadores = 0;
 %}
+
 
 %union {
    char* cadena;
@@ -36,38 +45,60 @@ listaSentencias: listaSentencias sentencia
 | sentencia
 ;
 
-sentencia: identificador ASIGNACION expresion PUNTOYCOMA 
+sentencia: ID ASIGNACION expresion PUNTOYCOMA {
+    char* nombre = $<cadena>1;
+    int valor = $<num>3;
+    asignarIds(nombre, valor);
+}
 | LEER PARENIZQUIERDO listaIds PARENDERECHO PUNTOYCOMA 
 | ESCRIBIR PARENIZQUIERDO listaExpresiones PARENDERECHO PUNTOYCOMA
 ;
 
-listaIds: listaIds COMA identificador 
-| identificador
+listaIds: listaIds COMA ID
+{
+	strcat($<cadena>1, ",");
+	strcat($<cadena>1, $<cadena>3);
+}
+| ID
 ;
 
 listaExpresiones: listaExpresiones COMA expresion
+{
+	printf("%d\n", $<num>3);
+}
 | expresion
+{
+	printf("%d\n", $<num>$);
+}
+
 ;
 
 expresion: primaria 
-| expresion operadorAditivo primaria
+| expresion SUMA primaria 
+{$<num>$ = $<num>1 + $<num>3;}
+| expresion RESTA primaria
+{$<num>$ = $<num>1 - $<num>3;}
 ;
 
-operadorAditivo: SUMA
-| RESTA
-;
-
-primaria: identificador 
-| CONSTANTE 
-| PARENIZQUIERDO expresion PARENDERECHO
-;
-
-identificador: ID {
-    if (yyleng > 32) {
-        printf("Error lexico en la línea %d: se excedió la longitud máxima de 32 caracteres para un identificador -> '%s'\n", yylineno, yytext);
-        yylexerrs++;
+primaria: ID 
+{
+    char* nombre = $<cadena>1;
+    int i;
+    for (i = 0; i < cantidadIdentificadores; i++) {
+        if (strcmp(listaIdentificadores[i].nombre, nombre) == 0) {
+            $<num>$ = listaIdentificadores[i].valor;
+            break;
+        }
+    }
+    if (i == cantidadIdentificadores) {
+	char mensajeDeError[100];
+        sprintf(mensajeDeError, "La variable %s no ha sido definida con ningun valor \n", nombre);
+	yyerror(mensajeDeError);
     }
 }
+| CONSTANTE 
+| PARENIZQUIERDO expresion PARENDERECHO
+{ $<num>$ = $<num>2; }
 ;
 
 %%
@@ -108,8 +139,22 @@ int main(int argc, char** argv) {
 }
 
 void yyerror(char *s) {
-    fprintf(stderr, "\nError sintactico en la linea %d: %s\n", yylineno, s);
-    if (yytext) {
-        fprintf(stderr, "                  -> Provocado por el token: %s\n", yytext);
+    fprintf(stderr, "\nError sintactico: %s en la linea %d\n", s, yylineno);
+    exit(1);
+}
+
+void asignarIds(char* nombre, int valor) {
+    int i;
+    for (i = 0; i < cantidadIdentificadores; i++) {
+        if (strcmp(listaIdentificadores[i].nombre, nombre) == 0) {
+            listaIdentificadores[i].valor = valor;
+            break;
+        }
+    }
+    
+    if (i == cantidadIdentificadores) {
+        listaIdentificadores[cantidadIdentificadores].nombre = nombre; 
+        listaIdentificadores[cantidadIdentificadores].valor = valor;
+        cantidadIdentificadores++;
     }
 }
