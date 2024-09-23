@@ -1260,7 +1260,7 @@ yyreduce:
     }
     if (i == cantidadIdentificadores) {
 	char mensajeDeError[100];
-        sprintf(mensajeDeError, "La variable %s no ha sido definida con ningun valor \n", nombre);
+        sprintf(mensajeDeError, "ERROR: La variable %s no ha sido definida con ningun valor \n", nombre);
 	yyerror(mensajeDeError);
     }
 }
@@ -1506,8 +1506,7 @@ int main(int argc, char** argv) {
 }
 
 void yyerror(char *s) {
-    fprintf(stderr, "\nError sintactico: %s en la linea %d\n", s, yylineno);
-    exit(1);
+    fprintf(stderr, "%s en la linea %d\n", s, yylineno);
 }
 
 void asignarIds(char* nombre, int valor) {

@@ -1,6 +1,5 @@
 inicio
 	a := 23;
-	b:= 4;
 	leer(a,b);
 	cc:= a + (b-2);
 	p:=a-452asasd;
