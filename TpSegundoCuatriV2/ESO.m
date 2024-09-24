@@ -2,9 +2,7 @@ inicio
 	a := 23;
 	b := 43;
 	leer(a,b);
-	cc:= a + (b 2);
-	p:=a-452asasd;
-	????
+	cc := a + 55433dddd
 	escribir(cc,a+4);
 	leer(a);
     leer(asd);

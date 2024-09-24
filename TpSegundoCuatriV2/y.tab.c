@@ -1195,14 +1195,7 @@ yyreduce:
   case 2: /* programa: INICIO listaSentencias FIN  */
 #line 39 "parserConListaIDs.y"
                                      {    
-    if (yylexerrs) {
-         printf("Se encontraron errores lexicos. El analisis se detuvo.\n");
-        YYABORT;
     }
-    if (yynerrs) {
-         printf("Se encontraron errores sintacticos. El analisis se detuvo.\n");
-        YYABORT;
-    }}
 #line 1207 "y.tab.c"
     break;
 
@@ -1324,31 +1317,37 @@ yyerrlab:
      user semantic actions for why this is necessary.  */
   yytoken = yychar == YYEMPTY ? YYSYMBOL_YYEMPTY : YYTRANSLATE (yychar);
   /* If not already recovering from an error, report this error.  */
-  if (!yyerrstatus)
-    {
-      ++yynerrs;
-      yyerror (YY_("Error sintactico"));
+  if (yylexerrs) {
+				char mensajeDeError[100]; 
+				sprintf(mensajeDeError, "Error lexico: %s es un identificador invalido", yytext); 
+				yyerror(mensajeDeError); 
     }
+  else{
+    if (!yyerrstatus)
+      {
+        ++yynerrs;
+        yyerror (YY_("Error sintactico"));
+      }
 
-  if (yyerrstatus == 3)
-    {
-      /* If just tried and failed to reuse lookahead token after an
-         error, discard it.  */
-
-      if (yychar <= YYEOF)
+      if (yyerrstatus == 3)
         {
-          /* Return failure if at end of input.  */
-          if (yychar == YYEOF)
-            YYABORT;
-        }
-      else
-        {
-          yydestruct ("Error: discarding",
-                      yytoken, &yylval);
-          yychar = YYEMPTY;
-        }
-    }
+          /* If just tried and failed to reuse lookahead token after an
+            error, discard it.  */
 
+          if (yychar <= YYEOF)
+            {
+              /* Return failure if at end of input.  */
+              if (yychar == YYEOF)
+                YYABORT;
+            }
+          else
+            {
+              yydestruct ("Error: discarding",
+                          yytoken, &yylval);
+              yychar = YYEMPTY;
+            }
+        } 
+    } 
   /* Else will try to reuse lookahead token after shifting the error
      token.  */
   goto yyerrlab1;
