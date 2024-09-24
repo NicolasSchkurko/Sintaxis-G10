@@ -32,11 +32,23 @@ ID_ERROR      {DIGITO}({DIGITO}|{LETRA})*
 "("         {return PARENIZQUIERDO;}
 {IDENTIFICADOR} {yylval.cadena = strdup(yytext); return ID;}
 {CONST} {yylval.num = atoi(yytext); return CONSTANTE; }
-{ID_ERROR}    { yylexerrs++; printf("Error lexico: %s es un identificador invalido\n", yytext); return 0; }
-
+{ID_ERROR} 	{ 
+				yylexerrs++; 
+				char mensajeDeError[100]; 
+				sprintf(mensajeDeError, "Error lexico: %s es un identificador invalido\n", yytext); 
+				yyerror(mensajeDeError); 
+				return 0;
+			}
 \n  { yylineno++; }
-[ \t\nEOF]             ;  // Ignorar espacios en blanco y tabulaciones, EOF ingorado debido a la presencia de "fin"
-. {yylexerrs++; printf("Error lexico: %s es un caracter invalido\n", yytext); return 0;}
+[ \tEOF]             ;  // Ignorar espacios en blanco y tabulaciones, EOF ingorado debido a la presencia de "fin"
+. 	{
+		yylexerrs++; 
+		char mensajeDeError[100]; 
+		sprintf(mensajeDeError, "Error lexico: %s es un caracter invalido\n", yytext); 
+		yyerror(mensajeDeError); 
+		return 0;
+	}
+
 %%
 
 int yywrap() {

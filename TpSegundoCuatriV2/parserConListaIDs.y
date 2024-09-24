@@ -1,4 +1,5 @@
 %{
+    
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,7 +9,6 @@ extern int yyleng;
 extern int yylex(void);
 extern void yyerror(char*);
 void asignarIds(char* nombre, int valor);
-
 extern int yylineno;
 extern int yynerrs;
 extern int yylexerrs;
@@ -18,8 +18,10 @@ struct Identificador{
    char* nombre;
    int valor;
 }; 
+
 struct Identificador listaIdentificadores[80];
 int cantidadIdentificadores = 0;
+
 %}
 
 
@@ -34,11 +36,15 @@ int cantidadIdentificadores = 0;
 
 %%  
 // Programa principal: arranca con INICIO y termina con FIN
-programa: INICIO listaSentencias FIN {
-    if (yynerrs || yylexerrs) {
+programa: INICIO listaSentencias FIN {    
+    if (yylexerrs) {
+         printf("Se encontraron errores lexicos. El analisis se detuvo.\n");
         YYABORT;
     }
-}
+    if (yynerrs) {
+         printf("Se encontraron errores sintacticos. El analisis se detuvo.\n");
+        YYABORT;
+    }}
 ;
 
 listaSentencias: listaSentencias sentencia 
@@ -126,7 +132,6 @@ int main(int argc, char** argv) {
         perror("Error al abrir el archivo");
         return EXIT_FAILURE;
     }
-
     switch (yyparse()) {
         case 0: printf("\nProceso de compilacion termino exitosamente, codigo correcto sintacticamente\n"); break;
         case 1: printf("\nErrores en la compilacion\n"); break;

@@ -1,5 +1,5 @@
 
-#line 2 "lex.yy.c"
+#line 3 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -475,8 +475,8 @@ char *yytext;
 	int yylex();
 	int yylineno;
 	int yylexerrs = 0;
-#line 478 "lex.yy.c"
 #line 479 "lex.yy.c"
+#line 480 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -695,7 +695,7 @@ YY_DECL
 	{
 #line 21 "scaner.l"
 
-#line 698 "lex.yy.c"
+#line 699 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -820,31 +820,42 @@ YY_RULE_SETUP
 case 14:
 YY_RULE_SETUP
 #line 35 "scaner.l"
-{ yylexerrs++; printf("Error lexico: %s es un identificador invalido\n", yytext); return 0; }
+{ 
+				yylexerrs++; 
+				char mensajeDeError[100]; 
+				sprintf(mensajeDeError, "Error lexico: %s es un identificador invalido\n", yytext); 
+				yyerror(mensajeDeError); 
+				return 0;
+			}
 	YY_BREAK
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 37 "scaner.l"
+#line 42 "scaner.l"
 { yylineno++; }
 	YY_BREAK
 case 16:
-/* rule 16 can match eol */
 YY_RULE_SETUP
-#line 38 "scaner.l"
+#line 43 "scaner.l"
 ;  // Ignorar espacios en blanco y tabulaciones, EOF ingorado debido a la presencia de "fin"
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 39 "scaner.l"
-{yylexerrs++; printf("Error lexico: %s es un caracter invalido\n", yytext); return 0;}
+#line 44 "scaner.l"
+{
+		yylexerrs++; 
+		char mensajeDeError[100]; 
+		sprintf(mensajeDeError, "Error lexico: %s es un caracter invalido\n", yytext); 
+		yyerror(mensajeDeError); 
+		return 0;
+	}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 40 "scaner.l"
+#line 52 "scaner.l"
 ECHO;
 	YY_BREAK
-#line 847 "lex.yy.c"
+#line 859 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1849,7 +1860,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 40 "scaner.l"
+#line 52 "scaner.l"
 
 
 int yywrap() {

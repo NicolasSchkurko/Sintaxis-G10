@@ -69,6 +69,7 @@
 /* First part of user prologue.  */
 #line 1 "parserConListaIDs.y"
 
+    
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -78,7 +79,6 @@ extern int yyleng;
 extern int yylex(void);
 extern void yyerror(char*);
 void asignarIds(char* nombre, int valor);
-
 extern int yylineno;
 extern int yynerrs;
 extern int yylexerrs;
@@ -88,10 +88,12 @@ struct Identificador{
    char* nombre;
    int valor;
 }; 
+
 struct Identificador listaIdentificadores[80];
 int cantidadIdentificadores = 0;
 
-#line 95 "y.tab.c"
+
+#line 97 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -176,12 +178,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "parserConListaIDs.y"
+#line 28 "parserConListaIDs.y"
 
    char* cadena;
    int num;
 
-#line 185 "y.tab.c"
+#line 187 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -613,8 +615,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    37,    37,    44,    45,    48,    53,    54,    57,    62,
-      65,    69,    76,    77,    79,    83,    99,   100
+       0,    39,    39,    50,    51,    54,    59,    60,    63,    68,
+      71,    75,    82,    83,    85,    89,   105,   106
 };
 #endif
 
@@ -1191,64 +1193,68 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* programa: INICIO listaSentencias FIN  */
-#line 37 "parserConListaIDs.y"
-                                     {
-    if (yynerrs || yylexerrs) {
+#line 39 "parserConListaIDs.y"
+                                     {    
+    if (yylexerrs) {
+         printf("Se encontraron errores lexicos. El analisis se detuvo.\n");
         YYABORT;
     }
-}
-#line 1201 "y.tab.c"
+    if (yynerrs) {
+         printf("Se encontraron errores sintacticos. El analisis se detuvo.\n");
+        YYABORT;
+    }}
+#line 1207 "y.tab.c"
     break;
 
   case 5: /* sentencia: ID ASIGNACION expresion PUNTOYCOMA  */
-#line 48 "parserConListaIDs.y"
+#line 54 "parserConListaIDs.y"
                                               {
     char* nombre = (yyvsp[-3].cadena);
     int valor = (yyvsp[-1].num);
     asignarIds(nombre, valor);
 }
-#line 1211 "y.tab.c"
+#line 1217 "y.tab.c"
     break;
 
   case 8: /* listaIds: listaIds COMA ID  */
-#line 58 "parserConListaIDs.y"
+#line 64 "parserConListaIDs.y"
 {
 	strcat((yyvsp[-2].cadena), ",");
 	strcat((yyvsp[-2].cadena), (yyvsp[0].cadena));
 }
-#line 1220 "y.tab.c"
+#line 1226 "y.tab.c"
     break;
 
   case 10: /* listaExpresiones: listaExpresiones COMA expresion  */
-#line 66 "parserConListaIDs.y"
+#line 72 "parserConListaIDs.y"
 {
 	printf("%d\n", (yyvsp[0].num));
 }
-#line 1228 "y.tab.c"
+#line 1234 "y.tab.c"
     break;
 
   case 11: /* listaExpresiones: expresion  */
-#line 70 "parserConListaIDs.y"
+#line 76 "parserConListaIDs.y"
 {
 	printf("%d\n", (yyval.num));
 }
-#line 1236 "y.tab.c"
-    break;
-
-  case 13: /* expresion: expresion SUMA primaria  */
-#line 78 "parserConListaIDs.y"
-{(yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num);}
 #line 1242 "y.tab.c"
     break;
 
-  case 14: /* expresion: expresion RESTA primaria  */
-#line 80 "parserConListaIDs.y"
-{(yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num);}
+  case 13: /* expresion: expresion SUMA primaria  */
+#line 84 "parserConListaIDs.y"
+{(yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num);}
 #line 1248 "y.tab.c"
     break;
 
+  case 14: /* expresion: expresion RESTA primaria  */
+#line 86 "parserConListaIDs.y"
+{(yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num);}
+#line 1254 "y.tab.c"
+    break;
+
   case 15: /* primaria: ID  */
-#line 84 "parserConListaIDs.y"
+#line 90 "parserConListaIDs.y"
 {
     char* nombre = (yyvsp[0].cadena);
     int i;
@@ -1264,17 +1270,17 @@ yyreduce:
 	yyerror(mensajeDeError);
     }
 }
-#line 1268 "y.tab.c"
-    break;
-
-  case 17: /* primaria: PARENIZQUIERDO expresion PARENDERECHO  */
-#line 101 "parserConListaIDs.y"
-{ (yyval.num) = (yyvsp[-1].num); }
 #line 1274 "y.tab.c"
     break;
 
+  case 17: /* primaria: PARENIZQUIERDO expresion PARENDERECHO  */
+#line 107 "parserConListaIDs.y"
+{ (yyval.num) = (yyvsp[-1].num); }
+#line 1280 "y.tab.c"
+    break;
 
-#line 1278 "y.tab.c"
+
+#line 1284 "y.tab.c"
 
       default: break;
     }
@@ -1467,7 +1473,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 104 "parserConListaIDs.y"
+#line 110 "parserConListaIDs.y"
 
 
 int main(int argc, char** argv) {
@@ -1493,7 +1499,6 @@ int main(int argc, char** argv) {
         perror("Error al abrir el archivo");
         return EXIT_FAILURE;
     }
-
     switch (yyparse()) {
         case 0: printf("\nProceso de compilacion termino exitosamente, codigo correcto sintacticamente\n"); break;
         case 1: printf("\nErrores en la compilacion\n"); break;
