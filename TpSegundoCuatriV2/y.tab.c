@@ -1327,7 +1327,7 @@ yyerrlab:
   if (!yyerrstatus)
     {
       ++yynerrs;
-      yyerror (YY_("syntax error"));
+      yyerror (YY_("Error sintactico"));
     }
 
   if (yyerrstatus == 3)
