@@ -821,10 +821,7 @@ case 14:
 YY_RULE_SETUP
 #line 35 "scaner.l"
 { 
-				yylexerrs++; 
-				char mensajeDeError[100]; 
-				sprintf(mensajeDeError, "Error lexico: %s es un identificador invalido", yytext); 
-				yyerror(mensajeDeError); 
+				yylexerrs++;
 				return 0;
 			}
 	YY_BREAK
@@ -843,12 +840,12 @@ case 17:
 YY_RULE_SETUP
 #line 44 "scaner.l"
 {
-				yylexerrs++; 
-				char mensajeDeError[100]; 
-				sprintf(mensajeDeError, "Error lexico: %s es un caracter invalido", yytext); 
-				yyerror(mensajeDeError); 
-				return 0;
-			}
+		yylexerrs++; 
+		char mensajeDeError[100]; 
+		sprintf(mensajeDeError, "Error lexico: %s es un caracter invalido", yytext); 
+		yyerror(mensajeDeError); 
+		return 0;
+	}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP

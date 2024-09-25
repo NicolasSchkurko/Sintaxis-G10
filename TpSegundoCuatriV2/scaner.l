@@ -41,13 +41,13 @@ ID_ERROR      {DIGITO}({DIGITO}|{LETRA})*
 			}
 \n  { yylineno++; }
 [ \tEOF]             ;  // Ignorar espacios en blanco y tabulaciones, EOF ingorado debido a la presencia de "fin"
-. 	{
-		yylexerrs++; 
-		char mensajeDeError[100]; 
-		sprintf(mensajeDeError, "Error lexico: %s es un caracter invalido", yytext); 
-		yyerror(mensajeDeError); 
-		return 0;
-	}
+. 			{
+				yylexerrs++; 
+				char mensajeDeError[100]; 
+				sprintf(mensajeDeError, "Error lexico: %s es un caracter invalido", yytext); 
+				yyerror(mensajeDeError); 
+				return 0;
+			}
 
 %%
 

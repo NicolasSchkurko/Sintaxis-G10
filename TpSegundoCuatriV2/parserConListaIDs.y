@@ -36,15 +36,7 @@ int cantidadIdentificadores = 0;
 
 %%  
 // Programa principal: arranca con INICIO y termina con FIN
-programa: INICIO listaSentencias FIN {    
-    if (yylexerrs) {
-         printf("Se encontraron errores lexicos. El analisis se detuvo.\n");
-        YYABORT;
-    }
-    if (yynerrs) {
-         printf("Se encontraron errores sintacticos. El analisis se detuvo.\n");
-        YYABORT;
-    }}
+programa: INICIO listaSentencias FIN
 ;
 
 listaSentencias: listaSentencias sentencia 
@@ -56,8 +48,12 @@ sentencia: ID ASIGNACION expresion PUNTOYCOMA {
     int valor = $<num>3;
     asignarIds(nombre, valor);
 }
-| LEER PARENIZQUIERDO listaIds PARENDERECHO PUNTOYCOMA 
-| ESCRIBIR PARENIZQUIERDO listaExpresiones PARENDERECHO PUNTOYCOMA
+| LEER PARENIZQUIERDO listaIds PARENDERECHO PUNTOYCOMA {
+    printf("Lee %s\n", $<cadena>3);
+}
+| ESCRIBIR PARENIZQUIERDO listaExpresiones PARENDERECHO PUNTOYCOMA{
+    printf("Escribe %d\n", $<num>3);
+}
 ;
 
 listaIds: listaIds COMA ID
@@ -69,14 +65,7 @@ listaIds: listaIds COMA ID
 ;
 
 listaExpresiones: listaExpresiones COMA expresion
-{
-	printf("%d\n", $<num>3);
-}
 | expresion
-{
-	printf("%d\n", $<num>$);
-}
-
 ;
 
 expresion: primaria 
@@ -98,13 +87,19 @@ primaria: ID
     }
     if (i == cantidadIdentificadores) {
 	char mensajeDeError[100];
-        sprintf(mensajeDeError, "ERROR: La variable %s no ha sido definida con ningun valor \n", nombre);
+        sprintf(mensajeDeError, "4) ERROR: La variable %s no ha sido definida con ningun valor \n", nombre);
 	yyerror(mensajeDeError);
     }
 }
 | CONSTANTE 
 | PARENIZQUIERDO expresion PARENDERECHO
 { $<num>$ = $<num>2; }
+| error {
+    // Salta al siguiente punto y coma
+    yyerror("Error en la sentencia, saltando al siguiente punto y coma...");
+        yyclearin;
+        yyerrok;
+}
 ;
 
 %%
@@ -144,7 +139,7 @@ int main(int argc, char** argv) {
 }
 
 void yyerror(char *s) {
-    fprintf(stderr, "%s en la linea %d\n", s, yylineno);
+    fprintf(stderr, "1) %s en la linea %d\n", s, yylineno);
 }
 
 void asignarIds(char* nombre, int valor) {

@@ -555,16 +555,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  8
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   39
+#define YYLAST   37
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  17
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  8
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  18
+#define YYNRULES  17
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  39
+#define YYNSTATES  38
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   271
@@ -615,8 +615,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    39,    39,    42,    43,    46,    51,    54,    59,    64,
-      67,    68,    71,    72,    74,    78,    94,    95,    97
+       0,    39,    39,    50,    51,    54,    59,    60,    63,    68,
+      71,    75,    82,    83,    85,    89,   105,   106
 };
 #endif
 
@@ -660,10 +660,10 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      21,     8,     2,    22,    24,    29,    -7,   -12,   -12,    18,
-       0,     0,   -12,   -12,   -12,     1,   -12,     0,   -12,   -12,
-       5,    20,   -12,     6,    30,    23,    16,    31,     0,     0,
-       0,   -12,   -12,   -12,   -12,   -12,    20,   -12,   -12
+       8,     3,    12,    24,    25,    18,    -8,   -12,   -12,    13,
+      -6,    -6,   -12,   -12,   -12,    -2,    -6,   -12,   -12,     0,
+      21,   -12,    19,    29,    20,    14,    30,    -6,    -6,    -6,
+     -12,   -12,   -12,   -12,   -12,    21,   -12,   -12
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -672,21 +672,21 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        0,     0,     0,     0,     0,     0,     0,     4,     1,     0,
-       0,     0,     2,     3,     9,     0,    18,     0,    15,    16,
-       0,    11,    12,     0,     0,     0,     0,     0,     0,     0,
-       0,     5,     6,     8,    17,     7,    10,    14,    13
+       0,     0,     2,     3,     9,     0,     0,    15,    16,     0,
+      11,    12,     0,     0,     0,     0,     0,     0,     0,     0,
+       5,     6,     8,    17,     7,    10,    14,    13
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -12,   -12,   -12,    33,   -12,   -12,   -11,    -2
+     -12,   -12,   -12,    31,   -12,   -12,   -11,     1
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     6,     7,    15,    20,    21,    22
+       0,     2,     6,     7,    15,    19,    20,    21
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -694,18 +694,18 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      23,    16,     8,    12,     3,     4,    26,    17,     5,    24,
-      31,    29,    30,    27,    25,    18,    19,    36,    28,     3,
-       4,    29,    30,     5,    34,    29,    30,    37,    38,     9,
-       1,    10,    11,    14,    32,    35,     0,     0,    33,    13
+      22,    16,    12,     3,     4,    25,    23,     5,    26,    17,
+      18,    24,     8,    27,     3,     4,    35,     1,     5,    28,
+      29,    11,    33,    30,    28,    29,    28,    29,    14,    36,
+      37,     9,    10,    31,    34,    32,     0,    13
 };
 
 static const yytype_int8 yycheck[] =
 {
-      11,     1,     0,    10,    11,    12,    17,     7,    15,     8,
-       4,     5,     6,     8,    13,    15,    16,    28,    13,    11,
-      12,     5,     6,    15,     8,     5,     6,    29,    30,     7,
-       9,     7,     3,    15,     4,     4,    -1,    -1,    15,     6
+      11,     7,    10,    11,    12,    16,     8,    15,     8,    15,
+      16,    13,     0,    13,    11,    12,    27,     9,    15,     5,
+       6,     3,     8,     4,     5,     6,     5,     6,    15,    28,
+      29,     7,     7,     4,     4,    15,    -1,     6
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -713,23 +713,23 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     9,    18,    11,    12,    15,    19,    20,     0,     7,
-       7,     3,    10,    20,    15,    21,     1,     7,    15,    16,
-      22,    23,    24,    23,     8,    13,    23,     8,    13,     5,
-       6,     4,     4,    15,     8,     4,    23,    24,    24
+       7,     3,    10,    20,    15,    21,     7,    15,    16,    22,
+      23,    24,    23,     8,    13,    23,     8,    13,     5,     6,
+       4,     4,    15,     8,     4,    23,    24,    24
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    17,    18,    19,    19,    20,    20,    20,    21,    21,
-      22,    22,    23,    23,    23,    24,    24,    24,    24
+      22,    22,    23,    23,    23,    24,    24,    24
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     3,     2,     1,     4,     5,     5,     3,     1,
-       3,     1,     1,     3,     3,     1,     1,     3,     1
+       3,     1,     1,     3,     3,     1,     1,     3
 };
 
 
@@ -1192,55 +1192,62 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 2: /* programa: INICIO listaSentencias FIN  */
+#line 39 "parserConListaIDs.y"
+                                     {    
+    }
+#line 1207 "y.tab.c"
+    break;
+
   case 5: /* sentencia: ID ASIGNACION expresion PUNTOYCOMA  */
-#line 46 "parserConListaIDs.y"
+#line 54 "parserConListaIDs.y"
                                               {
     char* nombre = (yyvsp[-3].cadena);
     int valor = (yyvsp[-1].num);
     asignarIds(nombre, valor);
 }
-#line 1203 "y.tab.c"
-    break;
-
-  case 6: /* sentencia: LEER PARENIZQUIERDO listaIds PARENDERECHO PUNTOYCOMA  */
-#line 51 "parserConListaIDs.y"
-                                                       {
-    printf("Lee %s\n", (yyvsp[-2].cadena));
-}
-#line 1211 "y.tab.c"
-    break;
-
-  case 7: /* sentencia: ESCRIBIR PARENIZQUIERDO listaExpresiones PARENDERECHO PUNTOYCOMA  */
-#line 54 "parserConListaIDs.y"
-                                                                  {
-    printf("Escribe %d\n", (yyvsp[-2].num));
-}
-#line 1219 "y.tab.c"
+#line 1217 "y.tab.c"
     break;
 
   case 8: /* listaIds: listaIds COMA ID  */
-#line 60 "parserConListaIDs.y"
+#line 64 "parserConListaIDs.y"
 {
 	strcat((yyvsp[-2].cadena), ",");
 	strcat((yyvsp[-2].cadena), (yyvsp[0].cadena));
 }
-#line 1228 "y.tab.c"
+#line 1226 "y.tab.c"
     break;
 
-  case 13: /* expresion: expresion SUMA primaria  */
-#line 73 "parserConListaIDs.y"
-{(yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num);}
+  case 10: /* listaExpresiones: listaExpresiones COMA expresion  */
+#line 72 "parserConListaIDs.y"
+{
+	printf("%d\n", (yyvsp[0].num));
+}
 #line 1234 "y.tab.c"
     break;
 
+  case 11: /* listaExpresiones: expresion  */
+#line 76 "parserConListaIDs.y"
+{
+	printf("%d\n", (yyval.num));
+}
+#line 1242 "y.tab.c"
+    break;
+
+  case 13: /* expresion: expresion SUMA primaria  */
+#line 84 "parserConListaIDs.y"
+{(yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num);}
+#line 1248 "y.tab.c"
+    break;
+
   case 14: /* expresion: expresion RESTA primaria  */
-#line 75 "parserConListaIDs.y"
+#line 86 "parserConListaIDs.y"
 {(yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num);}
-#line 1240 "y.tab.c"
+#line 1254 "y.tab.c"
     break;
 
   case 15: /* primaria: ID  */
-#line 79 "parserConListaIDs.y"
+#line 90 "parserConListaIDs.y"
 {
     char* nombre = (yyvsp[0].cadena);
     int i;
@@ -1252,32 +1259,21 @@ yyreduce:
     }
     if (i == cantidadIdentificadores) {
 	char mensajeDeError[100];
-        sprintf(mensajeDeError, "4) ERROR: La variable %s no ha sido definida con ningun valor \n", nombre);
+        sprintf(mensajeDeError, "ERROR: La variable %s no ha sido definida con ningun valor \n", nombre);
 	yyerror(mensajeDeError);
     }
 }
-#line 1260 "y.tab.c"
+#line 1274 "y.tab.c"
     break;
 
   case 17: /* primaria: PARENIZQUIERDO expresion PARENDERECHO  */
-#line 96 "parserConListaIDs.y"
+#line 107 "parserConListaIDs.y"
 { (yyval.num) = (yyvsp[-1].num); }
-#line 1266 "y.tab.c"
-    break;
-
-  case 18: /* primaria: error  */
-#line 97 "parserConListaIDs.y"
-        {
-    // Salta al siguiente punto y coma
-    yyerror("Error en la sentencia, saltando al siguiente punto y coma...");
-        yyclearin;
-        yyerrok;
-}
-#line 1277 "y.tab.c"
+#line 1280 "y.tab.c"
     break;
 
 
-#line 1281 "y.tab.c"
+#line 1284 "y.tab.c"
 
       default: break;
     }
@@ -1321,31 +1317,37 @@ yyerrlab:
      user semantic actions for why this is necessary.  */
   yytoken = yychar == YYEMPTY ? YYSYMBOL_YYEMPTY : YYTRANSLATE (yychar);
   /* If not already recovering from an error, report this error.  */
-  if (!yyerrstatus)
-    {
-      ++yynerrs;
-      yyerror (YY_("syntax error"));
+  if (yylexerrs) {
+				char mensajeDeError[100]; 
+				sprintf(mensajeDeError, "Error lexico: %s es un identificador invalido", yytext); 
+				yyerror(mensajeDeError); 
     }
+  else{
+    if (!yyerrstatus)
+      {
+        ++yynerrs;
+        yyerror (YY_("Error sintactico"));
+      }
 
-  if (yyerrstatus == 3)
-    {
-      /* If just tried and failed to reuse lookahead token after an
-         error, discard it.  */
-
-      if (yychar <= YYEOF)
+      if (yyerrstatus == 3)
         {
-          /* Return failure if at end of input.  */
-          if (yychar == YYEOF)
-            YYABORT;
-        }
-      else
-        {
-          yydestruct ("Error: discarding",
-                      yytoken, &yylval);
-          yychar = YYEMPTY;
-        }
-    }
+          /* If just tried and failed to reuse lookahead token after an
+            error, discard it.  */
 
+          if (yychar <= YYEOF)
+            {
+              /* Return failure if at end of input.  */
+              if (yychar == YYEOF)
+                YYABORT;
+            }
+          else
+            {
+              yydestruct ("Error: discarding",
+                          yytoken, &yylval);
+              yychar = YYEMPTY;
+            }
+        } 
+    } 
   /* Else will try to reuse lookahead token after shifting the error
      token.  */
   goto yyerrlab1;
@@ -1470,7 +1472,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 105 "parserConListaIDs.y"
+#line 110 "parserConListaIDs.y"
 
 
 int main(int argc, char** argv) {
@@ -1508,7 +1510,7 @@ int main(int argc, char** argv) {
 }
 
 void yyerror(char *s) {
-    fprintf(stderr, "1) %s en la linea %d\n", s, yylineno);
+    fprintf(stderr, "%s en la linea %d\n", s, yylineno);
 }
 
 void asignarIds(char* nombre, int valor) {
