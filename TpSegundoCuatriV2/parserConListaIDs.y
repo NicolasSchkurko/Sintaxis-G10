@@ -22,6 +22,18 @@ struct Identificador{
 struct Identificador listaIdentificadores[80];
 int cantidadIdentificadores = 0;
 
+
+int lineaActual = 0;
+int erroresSintacticos = 0;
+int erroresSemanticos = 0;
+
+typedef enum {
+    CORRECTO,
+    ERROR,
+    ERROR_MEMORIA
+} Estado;
+
+Estado estadoActual = CORRECTO;
 %}
 
 
@@ -43,18 +55,29 @@ listaSentencias: listaSentencias sentencia
 | sentencia
 ;
 
-sentencia: ID ASIGNACION expresion PUNTOYCOMA {
+
+sentencia: instruccion PUNTOYCOMA
+| error{
+    //  Nota de nico: Aparentemente si este error lo vuelo a la mierda el compi no lee el codigo completo (solo si hay error un de sentencia sin punto y coma)
+    yyerror("Falta punto y coma, saltando al siguiente punto y coma...");
+        yyclearin;
+        yyerrok;
+}
+;
+
+instruccion: ID ASIGNACION expresion {
     char* nombre = $<cadena>1;
     int valor = $<num>3;
     asignarIds(nombre, valor);
 }
-| LEER PARENIZQUIERDO listaIds PARENDERECHO PUNTOYCOMA {
+| LEER PARENIZQUIERDO listaIds PARENDERECHO {
     printf("Lee %s\n", $<cadena>3);
 }
-| ESCRIBIR PARENIZQUIERDO listaExpresiones PARENDERECHO PUNTOYCOMA{
+| ESCRIBIR PARENIZQUIERDO listaExpresiones PARENDERECHO{
     printf("Escribe %d\n", $<num>3);
 }
 ;
+
 
 listaIds: listaIds COMA ID
 {
@@ -87,8 +110,9 @@ primaria: ID
     }
     if (i == cantidadIdentificadores) {
 	char mensajeDeError[100];
-        sprintf(mensajeDeError, "4) ERROR: La variable %s no ha sido definida con ningun valor \n", nombre);
-	yyerror(mensajeDeError);
+        sprintf(mensajeDeError, "Error semantico (A REVISAR): La variable %s no ha sido definida con ningun valor", nombre);
+	    yyerror(mensajeDeError);
+        erroresSemanticos++;
     }
 }
 | CONSTANTE 
@@ -128,18 +152,30 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
     switch (yyparse()) {
-        case 0: printf("\nProceso de compilacion termino exitosamente, codigo correcto sintacticamente\n"); break;
-        case 1: printf("\nErrores en la compilacion\n"); break;
-        case 2: printf("\nNo hay memoria suficiente\n"); break;
+        case 0: estadoActual = CORRECTO; break;
+        case 1: estadoActual = ERROR; break;
+        case 2: estadoActual = ERROR_MEMORIA; break;
     }
 
-    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\n", yynerrs, yylexerrs);
+    if (erroresSintacticos || yylexerrs || erroresSemanticos) estadoActual = ERROR;
+
+    switch (estadoActual) {
+        case CORRECTO: printf("\nProceso de compilacion termino exitosamente, codigo correcto sintacticamente\n"); break;
+        case ERROR: printf( "\x1b[31m" "\nErrores en la compilacion\n" "\x1b[0m"); break;
+        case ERROR_MEMORIA: printf("\nNo hay memoria suficiente\n"); break;
+    }
+    erroresSintacticos = erroresSintacticos - yylexerrs - erroresSemanticos;
+    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\tErrores semanticos: %i\n", erroresSintacticos, yylexerrs, erroresSemanticos);
     fclose(yyin);
     return 0;
 }
 
 void yyerror(char *s) {
-    fprintf(stderr, "1) %s en la linea %d\n", s, yylineno);
+    if(lineaActual != yylineno){
+        lineaActual = yylineno;
+        fprintf(stderr, "\x1b[31m" "ERROR %s en la linea %d\n"  "\x1b[0m", s, yylineno);
+        erroresSintacticos++;
+    }
 }
 
 void asignarIds(char* nombre, int valor) {
