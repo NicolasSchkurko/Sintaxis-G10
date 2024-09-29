@@ -24,8 +24,9 @@ int cantidadIdentificadores = 0;
 
 
 int lineaActual = 0;
+int erroresLexicos = 0;
 int erroresSintacticos = 0;
-int erroresSemanticos = 0;
+int errorTotal = 0;
 
 typedef enum {
     CORRECTO,
@@ -91,7 +92,7 @@ listaExpresiones: listaExpresiones COMA expresion
 | expresion
 ;
 
-expresion: primaria 
+expresion: primaria
 | expresion SUMA primaria 
 {$<num>$ = $<num>1 + $<num>3;}
 | expresion RESTA primaria
@@ -110,9 +111,9 @@ primaria: ID
     }
     if (i == cantidadIdentificadores) {
 	char mensajeDeError[100];
-        sprintf(mensajeDeError, "Error semantico (A REVISAR): La variable %s no ha sido definida con ningun valor", nombre);
+        sprintf(mensajeDeError, "La variable %s no ha sido definida con ningun valor", nombre);
 	    yyerror(mensajeDeError);
-        erroresSemanticos++;
+        errorTotal++;
     }
 }
 | CONSTANTE 
@@ -157,15 +158,16 @@ int main(int argc, char** argv) {
         case 2: estadoActual = ERROR_MEMORIA; break;
     }
 
-    if (erroresSintacticos || yylexerrs || erroresSemanticos) estadoActual = ERROR;
+    if ((erroresSintacticos || yylexerrs || errorTotal) && estadoActual != ERROR_MEMORIA) estadoActual = ERROR;
 
     switch (estadoActual) {
         case CORRECTO: printf("\nProceso de compilacion termino exitosamente, codigo correcto sintacticamente\n"); break;
-        case ERROR: printf( "\x1b[31m" "\nErrores en la compilacion\n" "\x1b[0m"); break;
+        case ERROR: printf( "\nErrores en la compilacion\n"); break;
         case ERROR_MEMORIA: printf("\nNo hay memoria suficiente\n"); break;
     }
-    erroresSintacticos = erroresSintacticos - yylexerrs - erroresSemanticos;
-    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\tErrores semanticos: %i\n", erroresSintacticos, yylexerrs, erroresSemanticos);
+    erroresSintacticos = erroresSintacticos - yylexerrs - errorTotal;
+    errorTotal = errorTotal + erroresSintacticos + yylexerrs;
+    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\tErrores totales: %i\n", erroresSintacticos, yylexerrs, errorTotal);
     fclose(yyin);
     return 0;
 }
@@ -173,7 +175,13 @@ int main(int argc, char** argv) {
 void yyerror(char *s) {
     if(lineaActual != yylineno){
         lineaActual = yylineno;
-        fprintf(stderr, "\x1b[31m" "ERROR %s en la linea %d\n"  "\x1b[0m", s, yylineno);
+        fprintf(stderr,"ERROR: %s en la linea %d\n", s, yylineno);
+        erroresLexicos = yylexerrs;
+        erroresSintacticos++;
+    }
+    else if (erroresLexicos != yylexerrs){
+        fprintf(stderr,"ERROR: %s en la linea %d\n", s, yylineno);
+        erroresLexicos = yylexerrs;
         erroresSintacticos++;
     }
 }
