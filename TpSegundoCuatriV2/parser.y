@@ -1,5 +1,4 @@
 %{
-    
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,7 +25,8 @@ int cantidadIdentificadores = 0;
 int lineaActual = 0;
 int erroresLexicos = 0;
 int erroresSintacticos = 0;
-int errorTotal = 0;
+int errorID = 0;
+int errorTotal= 0;
 
 typedef enum {
     CORRECTO,
@@ -43,7 +43,7 @@ Estado estadoActual = CORRECTO;
    int num;
 }
 
-%token ASIGNACION PUNTOYCOMA RESTA SUMA PARENIZQUIERDO PARENDERECHO INICIO FIN LEER ESCRIBIR COMA FDT
+%token ASIGNACION PUNTOYCOMA RESTA SUMA PARENIZQUIERDO PARENDERECHO INICIO FIN LEER ESCRIBIR COMA
 %token <cadena> ID
 %token <num> CONSTANTE
 
@@ -112,7 +112,7 @@ primaria: ID
 	char mensajeDeError[100];
         sprintf(mensajeDeError, "La variable %s no ha sido definida con ningun valor", nombre);
 	    yyerror(mensajeDeError);
-        errorTotal++;
+        errorID++;
     }
 }
 | CONSTANTE 
@@ -164,7 +164,7 @@ int main(int argc, char** argv) {
     }
 
     // Verificación de errores
-    if ((erroresSintacticos || yylexerrs || errorTotal) && estadoActual != ERROR_MEMORIA) 
+    if ((errorTotal || yylexerrs || errorID) && estadoActual != ERROR_MEMORIA) 
         estadoActual = ERROR;
 
     // Mensajes según el estado de compilación
@@ -181,8 +181,7 @@ int main(int argc, char** argv) {
     }
 
     // Cálculo de errores
-    erroresSintacticos = erroresSintacticos - erroresLexicos - errorTotal;
-    errorTotal = errorTotal + erroresSintacticos + erroresLexicos;
+    erroresSintacticos = errorTotal - erroresLexicos - errorID;
     printf("\nErrores sintácticos: %i\tErrores léxicos: %i\tErrores totales: %i\n", erroresSintacticos, erroresLexicos, errorTotal);
 
     // Cierre del archivo
@@ -196,11 +195,11 @@ void yyerror(char *s) {
         lineaActual = yylineno;
         fprintf(stderr, "ERROR: %s en la línea %d\n", s, yylineno);
         erroresLexicos = yylexerrs;
-        erroresSintacticos++;
+        errorTotal++;
     } else if (erroresLexicos != yylexerrs) {
         fprintf(stderr, "ERROR: %s en la línea %d\n", s, yylineno);
         erroresLexicos = yylexerrs;
-        erroresSintacticos++;
+        errorTotal++;
     }
 }
 

@@ -65,9 +65,8 @@ extern int yydebug;
     LEER = 266,                    /* LEER  */
     ESCRIBIR = 267,                /* ESCRIBIR  */
     COMA = 268,                    /* COMA  */
-    FDT = 269,                     /* FDT  */
-    ID = 270,                      /* ID  */
-    CONSTANTE = 271                /* CONSTANTE  */
+    ID = 269,                      /* ID  */
+    CONSTANTE = 270                /* CONSTANTE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -87,9 +86,8 @@ extern int yydebug;
 #define LEER 266
 #define ESCRIBIR 267
 #define COMA 268
-#define FDT 269
-#define ID 270
-#define CONSTANTE 271
+#define ID 269
+#define CONSTANTE 270
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -100,7 +98,7 @@ union YYSTYPE
    char* cadena;
    int num;
 
-#line 104 "y.tab.h"
+#line 102 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
