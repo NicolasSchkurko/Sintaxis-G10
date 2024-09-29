@@ -464,8 +464,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "scaner.l"
-#line 3 "scaner.l"
+#line 1 "scanner.l"
+#line 3 "scanner.l"
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include "y.tab.h"
@@ -693,7 +693,7 @@ YY_DECL
 		}
 
 	{
-#line 21 "scaner.l"
+#line 21 "scanner.l"
 
 #line 699 "lex.yy.c"
 
@@ -754,72 +754,72 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 22 "scaner.l"
+#line 22 "scanner.l"
 {return ASIGNACION;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 23 "scaner.l"
+#line 23 "scanner.l"
 {return PUNTOYCOMA;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 24 "scaner.l"
+#line 24 "scanner.l"
 {return COMA;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 25 "scaner.l"
+#line 25 "scanner.l"
 {return INICIO;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 26 "scaner.l"
+#line 26 "scanner.l"
 {return LEER;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 27 "scaner.l"
+#line 27 "scanner.l"
 {return ESCRIBIR;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 28 "scaner.l"
+#line 28 "scanner.l"
 {return FIN;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 29 "scaner.l"
+#line 29 "scanner.l"
 {return SUMA;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 30 "scaner.l"
+#line 30 "scanner.l"
 {return RESTA;} 
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 31 "scaner.l"
+#line 31 "scanner.l"
 {return PARENDERECHO;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 32 "scaner.l"
+#line 32 "scanner.l"
 {return PARENIZQUIERDO;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 33 "scaner.l"
+#line 33 "scanner.l"
 {yylval.cadena = strdup(yytext); return ID;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 34 "scaner.l"
+#line 34 "scanner.l"
 {yylval.num = atoi(yytext); return CONSTANTE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 35 "scaner.l"
+#line 35 "scanner.l"
 { 
 				yylexerrs++; 
 				char mensajeDeError[100]; 
@@ -831,17 +831,17 @@ YY_RULE_SETUP
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 42 "scaner.l"
+#line 42 "scanner.l"
 { yylineno++; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 43 "scaner.l"
+#line 43 "scanner.l"
 ;  // Ignorar espacios en blanco y tabulaciones, EOF ingorado debido a la presencia de "fin"
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 44 "scaner.l"
+#line 44 "scanner.l"
 {
 				yylexerrs++; 
 				char mensajeDeError[100]; 
@@ -852,7 +852,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 52 "scaner.l"
+#line 52 "scanner.l"
 ECHO;
 	YY_BREAK
 #line 859 "lex.yy.c"
@@ -1860,7 +1860,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 52 "scaner.l"
+#line 52 "scanner.l"
 
 
 int yywrap() {

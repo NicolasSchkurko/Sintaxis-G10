@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "parserConListaIDs.y"
+#line 1 "parser.y"
 
     
 #include <stdio.h>
@@ -191,7 +191,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 41 "parserConListaIDs.y"
+#line 41 "parser.y"
 
    char* cadena;
    int num;
@@ -629,9 +629,9 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    52,    52,    55,    56,    60,    61,    69,    74,    77,
-      83,    88,    91,    92,    95,    96,    98,   102,   119,   120,
-     122
+       0,    52,    52,    55,    56,    60,    61,    68,    73,    76,
+      82,    87,    90,    91,    94,    95,    97,   101,   118,   119,
+     121
 };
 #endif
 
@@ -1210,65 +1210,64 @@ yyreduce:
   switch (yyn)
     {
   case 6: /* sentencia: error  */
-#line 61 "parserConListaIDs.y"
+#line 61 "parser.y"
        {
-    //  Nota de nico: Aparentemente si este error lo vuelo a la mierda el compi no lee el codigo completo (solo si hay error un de sentencia sin punto y coma)
     yyerror("Falta punto y coma, saltando al siguiente punto y coma...");
         yyclearin;
         yyerrok;
 }
-#line 1221 "y.tab.c"
+#line 1220 "y.tab.c"
     break;
 
   case 7: /* instruccion: ID ASIGNACION expresion  */
-#line 69 "parserConListaIDs.y"
+#line 68 "parser.y"
                                      {
     char* nombre = (yyvsp[-2].cadena);
     int valor = (yyvsp[0].num);
     asignarIds(nombre, valor);
 }
-#line 1231 "y.tab.c"
+#line 1230 "y.tab.c"
     break;
 
   case 8: /* instruccion: LEER PARENIZQUIERDO listaIds PARENDERECHO  */
-#line 74 "parserConListaIDs.y"
+#line 73 "parser.y"
                                             {
     printf("Lee %s\n", (yyvsp[-1].cadena));
 }
-#line 1239 "y.tab.c"
+#line 1238 "y.tab.c"
     break;
 
   case 9: /* instruccion: ESCRIBIR PARENIZQUIERDO listaExpresiones PARENDERECHO  */
-#line 77 "parserConListaIDs.y"
+#line 76 "parser.y"
                                                        {
     printf("Escribe %d\n", (yyvsp[-1].num));
 }
-#line 1247 "y.tab.c"
+#line 1246 "y.tab.c"
     break;
 
   case 10: /* listaIds: listaIds COMA ID  */
-#line 84 "parserConListaIDs.y"
+#line 83 "parser.y"
 {
 	strcat((yyvsp[-2].cadena), ",");
 	strcat((yyvsp[-2].cadena), (yyvsp[0].cadena));
 }
-#line 1256 "y.tab.c"
+#line 1255 "y.tab.c"
     break;
 
   case 15: /* expresion: expresion SUMA primaria  */
-#line 97 "parserConListaIDs.y"
+#line 96 "parser.y"
 {(yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num);}
-#line 1262 "y.tab.c"
+#line 1261 "y.tab.c"
     break;
 
   case 16: /* expresion: expresion RESTA primaria  */
-#line 99 "parserConListaIDs.y"
+#line 98 "parser.y"
 {(yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num);}
-#line 1268 "y.tab.c"
+#line 1267 "y.tab.c"
     break;
 
   case 17: /* primaria: ID  */
-#line 103 "parserConListaIDs.y"
+#line 102 "parser.y"
 {
     char* nombre = (yyvsp[0].cadena);
     int i;
@@ -1285,28 +1284,28 @@ yyreduce:
         errorTotal++;
     }
 }
-#line 1289 "y.tab.c"
+#line 1288 "y.tab.c"
     break;
 
   case 19: /* primaria: PARENIZQUIERDO expresion PARENDERECHO  */
-#line 121 "parserConListaIDs.y"
+#line 120 "parser.y"
 { (yyval.num) = (yyvsp[-1].num); }
-#line 1295 "y.tab.c"
+#line 1294 "y.tab.c"
     break;
 
   case 20: /* primaria: error  */
-#line 122 "parserConListaIDs.y"
+#line 121 "parser.y"
         {
     // Salta al siguiente punto y coma
     yyerror("Error en la sentencia, saltando al siguiente punto y coma...");
         yyclearin;
         yyerrok;
 }
-#line 1306 "y.tab.c"
+#line 1305 "y.tab.c"
     break;
 
 
-#line 1310 "y.tab.c"
+#line 1309 "y.tab.c"
 
       default: break;
     }
@@ -1499,7 +1498,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 130 "parserConListaIDs.y"
+#line 129 "parser.y"
 
 
 int main(int argc, char** argv) {
@@ -1538,9 +1537,9 @@ int main(int argc, char** argv) {
         case ERROR: printf( "\nErrores en la compilacion\n"); break;
         case ERROR_MEMORIA: printf("\nNo hay memoria suficiente\n"); break;
     }
-    erroresSintacticos = erroresSintacticos - yylexerrs - errorTotal;
-    errorTotal = errorTotal + erroresSintacticos + yylexerrs;
-    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\tErrores totales: %i\n", erroresSintacticos, yylexerrs, errorTotal);
+    erroresSintacticos = erroresSintacticos - erroresLexicos - errorTotal;
+    errorTotal = errorTotal + erroresSintacticos + erroresLexicos;
+    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\tErrores totales: %i\n", erroresSintacticos, erroresLexicos, errorTotal);
     fclose(yyin);
     return 0;
 }

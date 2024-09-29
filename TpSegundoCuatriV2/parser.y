@@ -59,7 +59,6 @@ listaSentencias: listaSentencias sentencia
 
 sentencia: instruccion PUNTOYCOMA
 | error{
-    //  Nota de nico: Aparentemente si este error lo vuelo a la mierda el compi no lee el codigo completo (solo si hay error un de sentencia sin punto y coma)
     yyerror("Falta punto y coma, saltando al siguiente punto y coma...");
         yyclearin;
         yyerrok;
@@ -165,9 +164,9 @@ int main(int argc, char** argv) {
         case ERROR: printf( "\nErrores en la compilacion\n"); break;
         case ERROR_MEMORIA: printf("\nNo hay memoria suficiente\n"); break;
     }
-    erroresSintacticos = erroresSintacticos - yylexerrs - errorTotal;
-    errorTotal = errorTotal + erroresSintacticos + yylexerrs;
-    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\tErrores totales: %i\n", erroresSintacticos, yylexerrs, errorTotal);
+    erroresSintacticos = erroresSintacticos - erroresLexicos - errorTotal;
+    errorTotal = errorTotal + erroresSintacticos + erroresLexicos;
+    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\tErrores totales: %i\n", erroresSintacticos, erroresLexicos, errorTotal);
     fclose(yyin);
     return 0;
 }

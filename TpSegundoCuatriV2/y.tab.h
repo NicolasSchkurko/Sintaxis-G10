@@ -95,7 +95,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 41 "parserConListaIDs.y"
+#line 41 "parser.y"
 
    char* cadena;
    int num;
