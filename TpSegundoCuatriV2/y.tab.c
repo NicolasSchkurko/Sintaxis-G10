@@ -79,7 +79,6 @@ extern int yylex(void);
 extern void yyerror(char*);
 void asignarIds(char* nombre, int valor);
 extern int yylineno;
-extern int yynerrs;
 extern int yylexerrs;
 extern FILE* yyin;
 
@@ -106,7 +105,7 @@ typedef enum {
 
 Estado estadoActual = CORRECTO;
 
-#line 110 "y.tab.c"
+#line 109 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -189,12 +188,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 41 "parser.y"
+#line 40 "parser.y"
 
    char* cadena;
    int num;
 
-#line 198 "y.tab.c"
+#line 197 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -626,9 +625,9 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    52,    52,    55,    56,    60,    61,    68,    73,    76,
-      82,    87,    90,    91,    94,    95,    97,   101,   118,   119,
-     121
+       0,    51,    51,    54,    55,    59,    60,    67,    72,    75,
+      81,    86,    89,    90,    93,    94,    96,   100,   117,   118,
+     120
 };
 #endif
 
@@ -1207,64 +1206,64 @@ yyreduce:
   switch (yyn)
     {
   case 6: /* sentencia: error  */
-#line 61 "parser.y"
+#line 60 "parser.y"
        {
     // Salta al siguiente punto y coma
         yyclearin;
         yyerrok;
 }
-#line 1217 "y.tab.c"
+#line 1216 "y.tab.c"
     break;
 
   case 7: /* instruccion: ID ASIGNACION expresion  */
-#line 68 "parser.y"
+#line 67 "parser.y"
                                      {
     char* nombre = (yyvsp[-2].cadena);
     int valor = (yyvsp[0].num);
     asignarIds(nombre, valor);
 }
-#line 1227 "y.tab.c"
+#line 1226 "y.tab.c"
     break;
 
   case 8: /* instruccion: LEER PARENIZQUIERDO listaIds PARENDERECHO  */
-#line 73 "parser.y"
+#line 72 "parser.y"
                                             {
     printf("Lee %s\n", (yyvsp[-1].cadena));
 }
-#line 1235 "y.tab.c"
+#line 1234 "y.tab.c"
     break;
 
   case 9: /* instruccion: ESCRIBIR PARENIZQUIERDO listaExpresiones PARENDERECHO  */
-#line 76 "parser.y"
+#line 75 "parser.y"
                                                        {
     printf("Escribe %d\n", (yyvsp[-1].num));
 }
-#line 1243 "y.tab.c"
+#line 1242 "y.tab.c"
     break;
 
   case 10: /* listaIds: listaIds COMA ID  */
-#line 83 "parser.y"
+#line 82 "parser.y"
 {
 	strcat((yyvsp[-2].cadena), ",");
 	strcat((yyvsp[-2].cadena), (yyvsp[0].cadena));
 }
-#line 1252 "y.tab.c"
+#line 1251 "y.tab.c"
     break;
 
   case 15: /* expresion: expresion SUMA primaria  */
-#line 96 "parser.y"
+#line 95 "parser.y"
 {(yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num);}
-#line 1258 "y.tab.c"
+#line 1257 "y.tab.c"
     break;
 
   case 16: /* expresion: expresion RESTA primaria  */
-#line 98 "parser.y"
+#line 97 "parser.y"
 {(yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num);}
-#line 1264 "y.tab.c"
+#line 1263 "y.tab.c"
     break;
 
   case 17: /* primaria: ID  */
-#line 102 "parser.y"
+#line 101 "parser.y"
 {
     char* nombre = (yyvsp[0].cadena);
     int i;
@@ -1281,27 +1280,27 @@ yyreduce:
         errorID++;
     }
 }
-#line 1285 "y.tab.c"
+#line 1284 "y.tab.c"
     break;
 
   case 19: /* primaria: PARENIZQUIERDO expresion PARENDERECHO  */
-#line 120 "parser.y"
+#line 119 "parser.y"
 { (yyval.num) = (yyvsp[-1].num); }
-#line 1291 "y.tab.c"
+#line 1290 "y.tab.c"
     break;
 
   case 20: /* primaria: error  */
-#line 121 "parser.y"
+#line 120 "parser.y"
         {
     // Salta al siguiente punto y coma
         yyclearin;
         yyerrok;
 }
-#line 1301 "y.tab.c"
+#line 1300 "y.tab.c"
     break;
 
 
-#line 1305 "y.tab.c"
+#line 1304 "y.tab.c"
 
       default: break;
     }
@@ -1494,7 +1493,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 128 "parser.y"
+#line 127 "parser.y"
 
 
 int main(int argc, char** argv) {

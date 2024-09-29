@@ -9,7 +9,6 @@ extern int yylex(void);
 extern void yyerror(char*);
 void asignarIds(char* nombre, int valor);
 extern int yylineno;
-extern int yynerrs;
 extern int yylexerrs;
 extern FILE* yyin;
 
