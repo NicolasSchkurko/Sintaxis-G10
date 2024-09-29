@@ -59,7 +59,7 @@ listaSentencias: listaSentencias sentencia
 
 sentencia: instruccion PUNTOYCOMA
 | error{
-    yyerror("Falta punto y coma, saltando al siguiente punto y coma...");
+    // Salta al siguiente punto y coma
         yyclearin;
         yyerrok;
 }
@@ -120,7 +120,6 @@ primaria: ID
 { $<num>$ = $<num>2; }
 | error {
     // Salta al siguiente punto y coma
-    yyerror("Error en la sentencia, saltando al siguiente punto y coma...");
         yyclearin;
         yyerrok;
 }

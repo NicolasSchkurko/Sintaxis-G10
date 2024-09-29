@@ -1209,7 +1209,7 @@ yyreduce:
   case 6: /* sentencia: error  */
 #line 61 "parser.y"
        {
-    yyerror("Falta punto y coma, saltando al siguiente punto y coma...");
+    // Salta al siguiente punto y coma
         yyclearin;
         yyerrok;
 }
@@ -1294,15 +1294,14 @@ yyreduce:
 #line 121 "parser.y"
         {
     // Salta al siguiente punto y coma
-    yyerror("Error en la sentencia, saltando al siguiente punto y coma...");
         yyclearin;
         yyerrok;
 }
-#line 1302 "y.tab.c"
+#line 1301 "y.tab.c"
     break;
 
 
-#line 1306 "y.tab.c"
+#line 1305 "y.tab.c"
 
       default: break;
     }
@@ -1495,7 +1494,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 129 "parser.y"
+#line 128 "parser.y"
 
 
 int main(int argc, char** argv) {
