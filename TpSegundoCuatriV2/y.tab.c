@@ -1502,64 +1502,85 @@ yyreturnlab:
 
 
 int main(int argc, char** argv) {
+    // Validación de argumentos
     if (argc == 1) {
-        printf("Debe ingresar el nombre del archivo fuente (en lenguaje Micro) en la linea de comandos\n");
+        printf("Debe ingresar el nombre del archivo fuente (en lenguaje Micro) en la línea de comandos\n");
         return -1;
     } else if (argc != 2) {
-        printf("Numero incorrecto de argumentos\n");
+        printf("Número incorrecto de argumentos\n");
         return -1;
     }
-    
+
+    // Carga del nombre del archivo
     char filename[50];
     sprintf(filename, "%s", argv[1]);
-    int largo = strlen(filename);
+    int longitudArchivo = strlen(filename);
 
-    if (argv[1][largo - 1] != 'm' || argv[1][largo - 2] != '.') {
-        printf("Extension incorrecta (debe ser .m)\n");
+    // Verificación de la extensión del archivo
+    if (argv[1][longitudArchivo - 1] != 'm' || argv[1][longitudArchivo - 2] != '.') {
+        printf("Extensión incorrecta (debe ser .m)\n");
         return EXIT_FAILURE;
     }
 
+    // Apertura del archivo
     yyin = fopen(filename, "r");
     if (yyin == NULL) {
         perror("Error al abrir el archivo");
         return EXIT_FAILURE;
     }
+
+    // Análisis sintáctico
     switch (yyparse()) {
         case 0: estadoActual = CORRECTO; break;
         case 1: estadoActual = ERROR; break;
         case 2: estadoActual = ERROR_MEMORIA; break;
     }
 
-    if ((erroresSintacticos || yylexerrs || errorTotal) && estadoActual != ERROR_MEMORIA) estadoActual = ERROR;
+    // Verificación de errores
+    if ((erroresSintacticos || yylexerrs || errorTotal) && estadoActual != ERROR_MEMORIA) 
+        estadoActual = ERROR;
 
+    // Mensajes según el estado de compilación
     switch (estadoActual) {
-        case CORRECTO: printf("\nProceso de compilacion termino exitosamente, codigo correcto sintacticamente\n"); break;
-        case ERROR: printf( "\nErrores en la compilacion\n"); break;
-        case ERROR_MEMORIA: printf("\nNo hay memoria suficiente\n"); break;
+        case CORRECTO: 
+            printf("\nProceso de compilación terminó exitosamente, código correcto sintácticamente\n"); 
+            break;
+        case ERROR: 
+            printf("\nErrores en la compilación\n"); 
+            break;
+        case ERROR_MEMORIA: 
+            printf("\nNo hay memoria suficiente\n"); 
+            break;
     }
+
+    // Cálculo de errores
     erroresSintacticos = erroresSintacticos - erroresLexicos - errorTotal;
     errorTotal = errorTotal + erroresSintacticos + erroresLexicos;
-    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\tErrores totales: %i\n", erroresSintacticos, erroresLexicos, errorTotal);
+    printf("\nErrores sintácticos: %i\tErrores léxicos: %i\tErrores totales: %i\n", erroresSintacticos, erroresLexicos, errorTotal);
+
+    // Cierre del archivo
     fclose(yyin);
     return 0;
 }
 
+// Manejo de errores
 void yyerror(char *s) {
-    if(lineaActual != yylineno){
+    if (lineaActual != yylineno) {
         lineaActual = yylineno;
-        fprintf(stderr,"ERROR: %s en la linea %d\n", s, yylineno);
+        fprintf(stderr, "ERROR: %s en la línea %d\n", s, yylineno);
         erroresLexicos = yylexerrs;
         erroresSintacticos++;
-    }
-    else if (erroresLexicos != yylexerrs){
-        fprintf(stderr,"ERROR: %s en la linea %d\n", s, yylineno);
+    } else if (erroresLexicos != yylexerrs) {
+        fprintf(stderr, "ERROR: %s en la línea %d\n", s, yylineno);
         erroresLexicos = yylexerrs;
         erroresSintacticos++;
     }
 }
 
+// Asignación de identificadores
 void asignarIds(char* nombre, int valor) {
     int i;
+    // Busca si el identificador ya existe
     for (i = 0; i < cantidadIdentificadores; i++) {
         if (strcmp(listaIdentificadores[i].nombre, nombre) == 0) {
             listaIdentificadores[i].valor = valor;
@@ -1567,6 +1588,7 @@ void asignarIds(char* nombre, int valor) {
         }
     }
     
+    // Si no existe, agrega uno nuevo
     if (i == cantidadIdentificadores) {
         listaIdentificadores[cantidadIdentificadores].nombre = nombre; 
         listaIdentificadores[cantidadIdentificadores].valor = valor;
