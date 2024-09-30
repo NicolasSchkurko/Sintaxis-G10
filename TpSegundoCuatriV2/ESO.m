@@ -6,4 +6,5 @@ inicio
 	es;
 	leer(a,b);
     escribir(pepe);
+	escribir(a+b);
 fin
