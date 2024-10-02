@@ -17,15 +17,15 @@ struct Identificador{
    int valor;
 }; 
 
+struct Identificador listaIdentificadores[80];
+int cantidadIdentificadores = 0;
+
 
 int lineaActual = 0;
 int erroresLexicos = 0;
 int erroresSintacticos = 0;
 int errorID = 0;
 int errorTotal= 0;
-struct Identificador listaIdentificadores[100];
-int cantIdentificadores = 0;
-
 
 typedef enum {
     CORRECTO,
@@ -42,9 +42,11 @@ Estado estadoActual = CORRECTO;
    int num;
 }
 
-%token ASIGNACION PUNTOYCOMA RESTA SUMA PARENIZQUIERDO PARENDERECHO INICIO FIN LEER ESCRIBIR COMA
+%token ASIGNACION PUNTOYCOMA RESTA SUMA PARENIZQUIERDO PARENDERECHO INICIO FIN LEER ESCRIBIR COMA MULTIPLICACION 
 %token <cadena> ID
 %token <num> CONSTANTE
+
+
 
 %%  
 // Programa principal: arranca con INICIO y termina con FIN
@@ -90,24 +92,29 @@ listaExpresiones: listaExpresiones COMA expresion
 | expresion
 ;
 
-expresion: primaria
-| expresion SUMA primaria 
+expresion: termino
+| expresion SUMA termino 
 {$<num>$ = $<num>1 + $<num>3;}
-| expresion RESTA primaria
+| expresion RESTA termino
 {$<num>$ = $<num>1 - $<num>3;}
+;
+
+termino: termino MULTIPLICACION primaria
+{$<num>$ = $<num>1 * $<num>3;}
+| primaria
 ;
 
 primaria: ID 
 {
     char* nombre = $<cadena>1;
     int i;
-    for (i = 0; i < cantIdentificadores; i++) {
+    for (i = 0; i < cantidadIdentificadores; i++) {
         if (strcmp(listaIdentificadores[i].nombre, nombre) == 0) {
             $<num>$ = listaIdentificadores[i].valor;
             break;
         }
     }
-    if (i == cantIdentificadores) {
+    if (i == cantidadIdentificadores) {
 	char mensajeDeError[100];
         sprintf(mensajeDeError, "La variable %s no ha sido definida con ningun valor", nombre);
 	    yyerror(mensajeDeError);
@@ -123,6 +130,7 @@ primaria: ID
         yyerrok;
 }
 ;
+
 
 %%
 
@@ -205,7 +213,7 @@ void yyerror(char *s) {
 void asignarIds(char* nombre, int valor) {
     int i;
     // Busca si el identificador ya existe
-    for (i = 0; i < cantIdentificadores; i++) {
+    for (i = 0; i < cantidadIdentificadores; i++) {
         if (strcmp(listaIdentificadores[i].nombre, nombre) == 0) {
             listaIdentificadores[i].valor = valor;
             break;
@@ -213,9 +221,9 @@ void asignarIds(char* nombre, int valor) {
     }
     
     // Si no existe, agrega uno nuevo
-    if (i == cantIdentificadores) {
-        listaIdentificadores[cantIdentificadores].nombre = nombre; 
-        listaIdentificadores[cantIdentificadores].valor = valor;
-        cantIdentificadores++;
+    if (i == cantidadIdentificadores) {
+        listaIdentificadores[cantidadIdentificadores].nombre = nombre; 
+        listaIdentificadores[cantidadIdentificadores].valor = valor;
+        cantidadIdentificadores++;
     }
 }
