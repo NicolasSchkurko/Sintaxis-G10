@@ -2,8 +2,9 @@ inicio
 	a := 23;
 	b := 43;
 	leer(a,b);
-	cc := a + 55555jjjjjj + 23232j;
-	es;
+	a := 3;
+	escribir (a);
+	c := 34fasda;
 	leer(a,b);
     escribir(pepe);
 	escribir(a+b);
