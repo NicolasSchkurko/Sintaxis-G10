@@ -1,3 +1,4 @@
+#include "descendente.h"
 /*
 
 link al docs: https://docs.google.com/document/d/1qp0yhD5ABOVlFwAY9jzOJOZ1I4TllnRc3X-ho10-s78/edit
@@ -11,7 +12,6 @@ Finalmente, para obtener un 10, deberán agregar un operador multiplicativo. ¿E
 
 
 /* Compilador del Lenguaje Micro (Fischer)	aa*/ 
-#include "scanner.h"
 
 
 /******************Declaraciones Globales*************************/
@@ -330,7 +330,7 @@ void Match(TOKEN t)
  flagToken = 0;
 }
 
-TOKEN ProximoToken() //ver pq chota hay un flag aca
+TOKEN ProximoToken() 
 {
  if ( !flagToken )
  {
@@ -339,7 +339,7 @@ TOKEN ProximoToken() //ver pq chota hay un flag aca
 
   flagToken = 1;
 
-  if ( tokenActual == ID ) Buscar(buffer, TS, &tokenActual);   //Buscar que hace esta cosa
+  if ( tokenActual == ID ) Buscar(buffer, TS, &tokenActual);   
    
    }
  return tokenActual;
@@ -526,4 +526,3 @@ int columna(int c)
  return 12;
 }
 /*************Fin Scanner**********************************************/
-

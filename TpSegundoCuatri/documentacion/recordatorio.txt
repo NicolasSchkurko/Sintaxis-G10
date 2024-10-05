@@ -1,1 +1,0 @@
-// cada vez que hacemos un cambio tenemos que ejecutar el comando flex scaner.l y luego gcc lex.yy.c -o ejemplo.exe
