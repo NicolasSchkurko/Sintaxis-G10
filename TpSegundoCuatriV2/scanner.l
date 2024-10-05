@@ -31,6 +31,8 @@ ID_ERROR      {DIGITO}({DIGITO}|{LETRA})*
 ")"         {return PARENDERECHO;}
 "("         {return PARENIZQUIERDO;}
 "*"         {return MULTIPLICACION;}
+"/"			{return DIVISION;}
+
 {IDENTIFICADOR} {yylval.cadena = strdup(yytext); return ID;}
 {CONST} {yylval.num = atoi(yytext); return CONSTANTE; }
 {ID_ERROR} 	{ 

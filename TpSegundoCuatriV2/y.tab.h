@@ -66,8 +66,9 @@ extern int yydebug;
     ESCRIBIR = 267,                /* ESCRIBIR  */
     COMA = 268,                    /* COMA  */
     MULTIPLICACION = 269,          /* MULTIPLICACION  */
-    ID = 270,                      /* ID  */
-    CONSTANTE = 271                /* CONSTANTE  */
+    DIVISION = 270,                /* DIVISION  */
+    ID = 271,                      /* ID  */
+    CONSTANTE = 272                /* CONSTANTE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -88,8 +89,9 @@ extern int yydebug;
 #define ESCRIBIR 267
 #define COMA 268
 #define MULTIPLICACION 269
-#define ID 270
-#define CONSTANTE 271
+#define DIVISION 270
+#define ID 271
+#define CONSTANTE 272
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -100,7 +102,7 @@ union YYSTYPE
    char* cadena;
    int num;
 
-#line 104 "y.tab.h"
+#line 106 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

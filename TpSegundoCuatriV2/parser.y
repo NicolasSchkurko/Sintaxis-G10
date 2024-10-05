@@ -41,7 +41,7 @@ Estado estadoActual = CORRECTO;
    int num;
 }
 
-%token ASIGNACION PUNTOYCOMA RESTA SUMA PARENIZQUIERDO PARENDERECHO INICIO FIN LEER ESCRIBIR COMA MULTIPLICACION 
+%token ASIGNACION PUNTOYCOMA RESTA SUMA PARENIZQUIERDO PARENDERECHO INICIO FIN LEER ESCRIBIR COMA MULTIPLICACION DIVISION
 %token <cadena> ID
 %token <num> CONSTANTE
 
@@ -101,6 +101,17 @@ expresion: termino
 
 termino: termino MULTIPLICACION primaria
 {$<num>$ = $<num>1 * $<num>3;}
+|termino DIVISION primaria
+{   
+    if($<num>3!=0) $<num>$ = $<num>1 / $<num>3;
+    else 
+        {
+            char mensajeDeError[100];
+            sprintf(mensajeDeError, "Es imposible dividir por 0");
+            yyerror(mensajeDeError);
+            errorID++;
+        }
+}
 | primaria
 ;
 

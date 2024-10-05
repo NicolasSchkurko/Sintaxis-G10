@@ -1,11 +1,10 @@
 inicio
-	a := 23;
-	b := 43;
+	a := 2;
+	b := 4;
 	leer(a,b);
-	a := 3;
 	escribir (a);
 	c := 34fasda;
 	leer(a,b);
     escribir(pepe);
-	escribir(a+b);
+	escribir(a+b/0+2);
 fin
