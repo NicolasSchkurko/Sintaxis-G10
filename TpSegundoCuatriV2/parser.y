@@ -108,8 +108,9 @@ termino: termino MULTIPLICACION primaria
     if($<num>3!=0) $<num>$ = $<num>1 / $<num>3;
     else 
         {
+            $<num>$ = 0;
             char mensajeDeError[100];
-            sprintf(mensajeDeError, "Es imposible dividir por 0");
+            sprintf(mensajeDeError, "Es imposible dividir por 0, no se toma en cuenta la division");
             yyerror(mensajeDeError);
             errorID++;
         }
@@ -195,8 +196,7 @@ int main(int argc, char** argv) {
     }
 
     // Cálculo de errores
-    erroresSintacticos = errorTotal - erroresLexicos - errorID;
-    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\tErrores totales: %i\n", erroresSintacticos, erroresLexicos, errorTotal);
+    printf("\nErrores totales: %i\n", errorTotal);
 
     // Cierre del archivo
     fclose(yyin);

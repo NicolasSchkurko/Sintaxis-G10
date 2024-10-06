@@ -634,8 +634,8 @@ static const yytype_int8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    54,    54,    57,    58,    62,    63,    70,    76,    79,
-      85,    90,    93,    94,    97,    98,   100,   104,   106,   117,
-     120,   137,   138
+      85,    90,    93,    94,    97,    98,   100,   104,   106,   118,
+     121,   138,   139
 };
 #endif
 
@@ -1287,17 +1287,18 @@ yyreduce:
     if((yyvsp[0].num)!=0) (yyval.num) = (yyvsp[-2].num) / (yyvsp[0].num);
     else 
         {
+            (yyval.num) = 0;
             char mensajeDeError[100];
-            sprintf(mensajeDeError, "Es imposible dividir por 0");
+            sprintf(mensajeDeError, "Es imposible dividir por 0, no se toma en cuenta la division");
             yyerror(mensajeDeError);
             errorID++;
         }
 }
-#line 1297 "y.tab.c"
+#line 1298 "y.tab.c"
     break;
 
   case 20: /* primaria: ID  */
-#line 121 "parser.y"
+#line 122 "parser.y"
 {
     char* nombre = (yyvsp[0].cadena);
     int i;
@@ -1314,17 +1315,17 @@ yyreduce:
         errorID++;
     }
 }
-#line 1318 "y.tab.c"
+#line 1319 "y.tab.c"
     break;
 
   case 22: /* primaria: PARENIZQUIERDO expresion PARENDERECHO  */
-#line 139 "parser.y"
+#line 140 "parser.y"
 { (yyval.num) = (yyvsp[-1].num); }
-#line 1324 "y.tab.c"
+#line 1325 "y.tab.c"
     break;
 
 
-#line 1328 "y.tab.c"
+#line 1329 "y.tab.c"
 
       default: break;
     }
@@ -1517,7 +1518,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 143 "parser.y"
+#line 144 "parser.y"
 
 
 int main(int argc, char** argv) {
@@ -1573,8 +1574,7 @@ int main(int argc, char** argv) {
     }
 
     // Cálculo de errores
-    erroresSintacticos = errorTotal - erroresLexicos - errorID;
-    printf("\nErrores sintacticos: %i\tErrores lexicos: %i\tErrores totales: %i\n", erroresSintacticos, erroresLexicos, errorTotal);
+    printf("\nErrores totales: %i\n", errorTotal);
 
     // Cierre del archivo
     fclose(yyin);
