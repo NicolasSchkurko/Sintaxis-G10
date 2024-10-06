@@ -167,7 +167,7 @@ void Expresion(REG_EXPRESION *presul)
     while (1)
     {
         TOKEN t = ProximoToken();
-        if (t == SUMA || t == RESTA || t == MULTIPLICACION)
+        if (t == SUMA || t == RESTA || t == MULTIPLICACION || t == DIVISION)
         {
             Operador(operador);
             Termino(&op2);
@@ -193,7 +193,7 @@ void Termino(REG_EXPRESION *presul)
     while (1)
     {
         TOKEN t = ProximoToken();
-        if (t == MULTIPLICACION)
+        if (t == MULTIPLICACION || t == DIVISION)
         {
             // Procesar el operador (suma, resta o multiplicacion)
             Operador(operador);
@@ -238,7 +238,7 @@ void Operador(char *presul)
 {
     /* <Operador> -> SUMA #procesar_op | RESTA #procesar_op | MULTIPLICACION #procesar_op */
     TOKEN t = ProximoToken();
-    if (t == SUMA || t == RESTA || t == MULTIPLICACION)
+    if (t == SUMA || t == RESTA || t == MULTIPLICACION || t == DIVISION)
     {
         Match(t);
         strcpy(presul, ProcesarOp());
@@ -300,6 +300,10 @@ REG_EXPRESION GenInfijo(REG_EXPRESION e1, char *op, REG_EXPRESION e2)
         strcpy(cadOp, "Sumar");
     else if (op[0] == '*') 
         strcpy(cadOp, "Multiplicar");
+    else if (op[0] == '/') 
+    {
+        strcpy(cadOp, "Dividir");
+    }
     sprintf(cadNum, "%d", numTemp);
     numTemp++;
     strcat(cadTemp, cadNum);
@@ -422,23 +426,23 @@ void Asignar(REG_EXPRESION izq, REG_EXPRESION der)
 TOKEN scanner()
 {
     int tabla[NUMESTADOS][NUMCOLS] =
-        //L   D   +   -   (   )   ,   ;   :   =   EOF ´ ´  *   OTRO
-        {{1,  3,  5,  6,  7,  8,  9,  10, 11, 14, 13, 0,  15, 14},
-         {1,  1,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2 },
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-         {4,  3,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4 },
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 12, 14, 14, 14, 14},
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14}};
+        //L   D   +   -   (   )   ,   ;   :   =   EOF ´ ´  *   /   OTRO
+        {{1,  3,  5,  6,  7,  8,  9,  10, 11, 14, 13, 0,  15, 16, 14},
+         {1,  1,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2 },
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
+         {4,  3,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4 },
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 12, 14, 14, 14, 14, 14},
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
+         {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14}};
     int car;
     int col;
     int estado = 0;
@@ -490,7 +494,9 @@ TOKEN scanner()
     case 14:
         return ERRORLEXICO;
     case 15:
-        return MULTIPLICACION; // Nuevo caso para '*'
+        return MULTIPLICACION;
+    case 16:
+        return DIVISION; // Nuevo caso para '/'
     }
     return 0;
 }
@@ -529,7 +535,9 @@ int columna(int c)
     if (isspace(c))
         return 11;
     if (c == '*')
-        return 12; // Nuevo caso para '*'
-    return 13;
+        return 12;
+    if (c == '/') // Nuevo caso para '/'
+        return 13;
+    return 14;
 }
 /*************Fin Scanner**********************************************/

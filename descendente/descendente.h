@@ -1,8 +1,8 @@
-#define NUMESTADOS 16
-#define NUMCOLS 14
+#define NUMESTADOS 17
+#define NUMCOLS 15
 #define TAMLEX 32 + 1
 #define TAMNOM 20 + 1
-#define MAX_OPERADOR 10
+#define MAX_OPERADOR 1
 
 /******************Declaraciones Globales*************************/
 FILE *in;
@@ -23,7 +23,8 @@ typedef enum
     RESTA,
     FDT,
     ERRORLEXICO,
-    MULTIPLICACION
+    MULTIPLICACION,
+    DIVISION,
 } TOKEN;
 
 typedef struct
