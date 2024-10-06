@@ -7,4 +7,5 @@ inicio
 	leer(a,b);
     escribir(pepe);
 	escribir(a+b/0+2);
+	escribir((22);
 fin

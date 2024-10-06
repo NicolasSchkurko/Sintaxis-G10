@@ -26,6 +26,8 @@ int erroresSintacticos = 0;
 int errorID = 0;
 int errorTotal= 0;
 
+int erroreslol = 0;
+
 typedef enum {
     CORRECTO,
     ERROR,
@@ -134,12 +136,7 @@ primaria: ID
 }
 | CONSTANTE 
 | PARENIZQUIERDO expresion PARENDERECHO
-{ $<num>$ = $<num>2; }
-| error {
-    // Salta al siguiente punto y coma
-        yyclearin;
-        yyerrok;
-}
+{ $<num>$ = $<num>2; } 
 ;
 
 
