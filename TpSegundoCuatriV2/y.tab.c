@@ -77,10 +77,11 @@ extern char *yytext;
 extern int yyleng;
 extern int yylex(void);
 extern void yyerror(char*);
-void asignarIds(char* nombre, int valor);
 extern int yylineno;
 extern int yylexerrs;
 extern FILE* yyin;
+
+void asignarIds(char* nombre, int valor);
 
 struct Identificador{
    char* nombre;
@@ -93,10 +94,9 @@ int cantIdentificadores = 0;
 int lineaActual = 0;
 int erroresLexicos = 0;
 int erroresSintacticos = 0;
-int errorID = 0;
-int errorTotal= 0;
+int otrosErrores = 0;
+int erroresTotales= 0;
 
-int erroreslol = 0;
 
 typedef enum {
     CORRECTO,
@@ -635,7 +635,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    54,    54,    57,    58,    62,    63,    70,    76,    79,
       85,    90,    93,    94,    97,    98,   100,   104,   106,   118,
-     121,   138,   139
+     121,   137,   138
 };
 #endif
 
@@ -1291,7 +1291,7 @@ yyreduce:
             char mensajeDeError[100];
             sprintf(mensajeDeError, "Es imposible dividir por 0, no se toma en cuenta la division");
             yyerror(mensajeDeError);
-            errorID++;
+            otrosErrores++;
         }
 }
 #line 1298 "y.tab.c"
@@ -1301,8 +1301,7 @@ yyreduce:
 #line 122 "parser.y"
 {
     char* nombre = (yyvsp[0].cadena);
-    int i;
-    for (i = 0; i < cantIdentificadores; i++) {
+    for (int i = 0; i < cantIdentificadores; i++) {
         if (strcmp(listaIds[i].nombre, nombre) == 0) {
             (yyval.num) = listaIds[i].valor;
             break;
@@ -1312,20 +1311,20 @@ yyreduce:
 	char mensajeDeError[100];
         sprintf(mensajeDeError, "La variable %s no ha sido definida con ningun valor", nombre);
 	    yyerror(mensajeDeError);
-        errorID++;
+        otrosErrores++;
     }
 }
-#line 1319 "y.tab.c"
+#line 1318 "y.tab.c"
     break;
 
   case 22: /* primaria: PARENIZQUIERDO expresion PARENDERECHO  */
-#line 140 "parser.y"
+#line 139 "parser.y"
 { (yyval.num) = (yyvsp[-1].num); }
-#line 1325 "y.tab.c"
+#line 1324 "y.tab.c"
     break;
 
 
-#line 1329 "y.tab.c"
+#line 1328 "y.tab.c"
 
       default: break;
     }
@@ -1518,7 +1517,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 144 "parser.y"
+#line 143 "parser.y"
 
 
 int main(int argc, char** argv) {
@@ -1557,7 +1556,7 @@ int main(int argc, char** argv) {
     }
 
     // Verificación de errores
-    if ((errorTotal || yylexerrs || errorID) && estadoActual != ERROR_MEMORIA) 
+    if ((erroresTotales || yylexerrs || otrosErrores) && estadoActual != ERROR_MEMORIA) 
         estadoActual = ERROR;
 
     // Mensajes según el estado de compilación
@@ -1574,7 +1573,7 @@ int main(int argc, char** argv) {
     }
 
     // Cálculo de errores
-    printf("\nErrores totales: %i\n", errorTotal);
+    printf("\nErrores totales: %i\n", erroresTotales);
 
     // Cierre del archivo
     fclose(yyin);
@@ -1587,11 +1586,11 @@ void yyerror(char *s) {
         lineaActual = yylineno;
         fprintf(stderr, "ERROR: %s en la linea %d\n", s, yylineno);
         erroresLexicos = yylexerrs;
-        errorTotal++;
+        erroresTotales++;
     } else if (erroresLexicos != yylexerrs) {
         fprintf(stderr, "ERROR: %s en la linea %d\n", s, yylineno);
         erroresLexicos = yylexerrs;
-        errorTotal++;
+        erroresTotales++;
     }
 }
 

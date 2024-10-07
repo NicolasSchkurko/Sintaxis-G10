@@ -1,9 +1,0 @@
-inicio
-	a:=4;
-	b:=5*(a+4);
-	escribir(a);
-	leer(a,b);
-	escribir(b);
-	leer(c);
-	c:=a+b;
-fin

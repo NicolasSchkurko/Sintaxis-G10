@@ -7,10 +7,11 @@ extern char *yytext;
 extern int yyleng;
 extern int yylex(void);
 extern void yyerror(char*);
-void asignarIds(char* nombre, int valor);
 extern int yylineno;
 extern int yylexerrs;
 extern FILE* yyin;
+
+void asignarIds(char* nombre, int valor);
 
 struct Identificador{
    char* nombre;
@@ -23,10 +24,9 @@ int cantIdentificadores = 0;
 int lineaActual = 0;
 int erroresLexicos = 0;
 int erroresSintacticos = 0;
-int errorID = 0;
-int errorTotal= 0;
+int otrosErrores = 0;
+int erroresTotales= 0;
 
-int erroreslol = 0;
 
 typedef enum {
     CORRECTO,
@@ -112,7 +112,7 @@ termino: termino MULTIPLICACION primaria
             char mensajeDeError[100];
             sprintf(mensajeDeError, "Es imposible dividir por 0, no se toma en cuenta la division");
             yyerror(mensajeDeError);
-            errorID++;
+            otrosErrores++;
         }
 }
 | primaria
@@ -121,7 +121,7 @@ termino: termino MULTIPLICACION primaria
 primaria: ID 
 {
     char* nombre = $<cadena>1;
-    int i;
+    int i; //AUX
     for (i = 0; i < cantIdentificadores; i++) {
         if (strcmp(listaIds[i].nombre, nombre) == 0) {
             $<num>$ = listaIds[i].valor;
@@ -132,7 +132,7 @@ primaria: ID
 	char mensajeDeError[100];
         sprintf(mensajeDeError, "La variable %s no ha sido definida con ningun valor", nombre);
 	    yyerror(mensajeDeError);
-        errorID++;
+        otrosErrores++;
     }
 }
 | CONSTANTE 
@@ -179,13 +179,13 @@ int main(int argc, char** argv) {
     }
 
     // Verificación de errores
-    if ((errorTotal || yylexerrs || errorID) && estadoActual != ERROR_MEMORIA) 
+    if ((erroresTotales || yylexerrs || otrosErrores) && estadoActual != ERROR_MEMORIA) 
         estadoActual = ERROR;
 
     // Mensajes según el estado de compilación
     switch (estadoActual) {
         case CORRECTO: 
-            printf("\nProceso de compilacion termino exitosamente, codigo correcto sintacticamente\n"); 
+            printf("\nProceso de compilacion termino exitosamente, codigo correcto sintacticamente y lexicamente\n"); 
             break;
         case ERROR: 
             printf("\nErrores en la compilacion\n"); 
@@ -196,7 +196,7 @@ int main(int argc, char** argv) {
     }
 
     // Cálculo de errores
-    printf("\nErrores totales: %i\n", errorTotal);
+    printf("\nErrores totales: %i\n", erroresTotales);
 
     // Cierre del archivo
     fclose(yyin);
@@ -209,11 +209,11 @@ void yyerror(char *s) {
         lineaActual = yylineno;
         fprintf(stderr, "ERROR: %s en la linea %d\n", s, yylineno);
         erroresLexicos = yylexerrs;
-        errorTotal++;
+        erroresTotales++;
     } else if (erroresLexicos != yylexerrs) {
         fprintf(stderr, "ERROR: %s en la linea %d\n", s, yylineno);
         erroresLexicos = yylexerrs;
-        errorTotal++;
+        erroresTotales++;
     }
 }
 
