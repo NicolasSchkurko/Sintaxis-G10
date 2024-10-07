@@ -67,13 +67,13 @@ REG_EXPRESION ProcesarId(void);
 char *ProcesarOp(void);
 void Leer(REG_EXPRESION in);
 void Escribir(REG_EXPRESION out);
-REG_EXPRESION GenInfijo(REG_EXPRESION e1, char *op, REG_EXPRESION e2);
+REG_EXPRESION GenInfijo(REG_EXPRESION factor1, char *operador, REG_EXPRESION factor2);
 
 void Match(TOKEN t);
 TOKEN ProximoToken();
 void ErrorLexico();
 void ErrorSintactico();
-void Generar(char *co, char *a, char *b, char *c);
+void GenerarInstruccion(char *codigoperacion, char *argumento1, char *argumento2, char *argumento3);
 char *Extraer(REG_EXPRESION *preg);
 int Buscar(char *id, RegTS *TS, TOKEN *t);
 void Colocar(char *id, RegTS *TS);

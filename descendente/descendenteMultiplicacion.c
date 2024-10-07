@@ -277,13 +277,13 @@ char* ProcesarOp(void)
 void Leer(REG_EXPRESION in)
 {
     /* Genera la instruccion para leer */
-    Generar("Read", in.nombre, "Entera", "");
+    GenerarInstruccion("Read", in.nombre, "Entera", "");
 }
 
 void Escribir(REG_EXPRESION out)
 {
     /* Genera la instruccion para escribir */
-    Generar("Write", Extraer(&out), "Entera", "");
+    GenerarInstruccion("Write", Extraer(&out), "Entera", "");
 }
 
 REG_EXPRESION GenInfijo(REG_EXPRESION factor1, char *operador, REG_EXPRESION factor2)
@@ -293,15 +293,15 @@ REG_EXPRESION GenInfijo(REG_EXPRESION factor1, char *operador, REG_EXPRESION fac
     static unsigned int numTemp = 1;
     char cadenaTemporal[TAMLEX] = "Temp&";
     char cadenaNumero[TAMLEX];
-    char cadenaOperador[TAMLEX];
+    char accionOperador[TAMLEX];
     if (operador[0] == '-')
-        strcpy(cadenaOperador, "Restar");
+        strcpy(accionOperador, "Restar");
     else if (operador[0] == '+')
-        strcpy(cadenaOperador, "Sumar");
+        strcpy(accionOperador, "Sumar");
     else if (operador[0] == '*') 
-        strcpy(cadenaOperador, "Multiplicar");
+        strcpy(accionOperador, "Multiplicar");
     else if (operador[0] == '/') 
-        strcpy(cadenaOperador, "Dividir");
+        strcpy(accionOperador, "Dividir");
 
     sprintf(cadenaNumero, "%d", numTemp);
     numTemp++;
@@ -311,7 +311,7 @@ REG_EXPRESION GenInfijo(REG_EXPRESION factor1, char *operador, REG_EXPRESION fac
     if (factor2.clase == ID)
         RevisaEnTS(Extraer(&factor2));
     RevisaEnTS(cadenaTemporal);
-    Generar(cadenaOperador, Extraer(&factor1), Extraer(&factor2), cadenaTemporal);
+    GenerarInstruccion(accionOperador, Extraer(&factor1), Extraer(&factor2), cadenaTemporal);
     strcpy(reg.nombre, cadenaTemporal);
     return reg;
 }
@@ -350,7 +350,7 @@ void ErrorSintactico()
     printf("Error Sintactico\n");
 }
 
-void Generar(char *codigoperacion, char *argumento1, char *argumento2, char *argumento3)
+void GenerarInstruccion(char *codigoperacion, char *argumento1, char *argumento2, char *argumento3)
 {
     /* Produce la salida de la instruccion para la MV por stdout */
     printf("%s %s, %s, %s\n", codigoperacion, argumento1, argumento2, argumento3);
@@ -400,7 +400,7 @@ void RevisaEnTS(char *s)
     if (!Buscar(s, TS, &t))
     {
         Colocar(s, TS);
-        Generar("Declara", s, "Entera", "");
+        GenerarInstruccion("Declara", s, "Entera", "");
     }
 }
 
@@ -412,13 +412,13 @@ void Comenzar(void)
 void Terminar(void)
 {
     /* Genera la instruccion para terminar la ejecucion del programa */
-    Generar("Detiene", "", "", "");
+    GenerarInstruccion("Detiene", "", "", "");
 }
 
 void Asignar(REG_EXPRESION izq, REG_EXPRESION der)
 {
     /* Genera la instruccion para la asignacion */
-    Generar("Almacena", Extraer(&der), izq.nombre, "");
+    GenerarInstruccion("Almacena", Extraer(&der), izq.nombre, "");
 }
 
 /**************************Scanner************************************/
