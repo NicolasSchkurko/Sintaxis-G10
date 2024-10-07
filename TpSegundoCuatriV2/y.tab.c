@@ -635,7 +635,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    54,    54,    57,    58,    62,    63,    70,    76,    79,
       85,    90,    93,    94,    97,    98,   100,   104,   106,   118,
-     121,   137,   138
+     121,   138,   139
 };
 #endif
 
@@ -1301,7 +1301,8 @@ yyreduce:
 #line 122 "parser.y"
 {
     char* nombre = (yyvsp[0].cadena);
-    for (int i = 0; i < cantIdentificadores; i++) {
+    int i; //AUX
+    for (i = 0; i < cantIdentificadores; i++) {
         if (strcmp(listaIds[i].nombre, nombre) == 0) {
             (yyval.num) = listaIds[i].valor;
             break;
@@ -1314,17 +1315,17 @@ yyreduce:
         otrosErrores++;
     }
 }
-#line 1318 "y.tab.c"
+#line 1319 "y.tab.c"
     break;
 
   case 22: /* primaria: PARENIZQUIERDO expresion PARENDERECHO  */
-#line 139 "parser.y"
+#line 140 "parser.y"
 { (yyval.num) = (yyvsp[-1].num); }
-#line 1324 "y.tab.c"
+#line 1325 "y.tab.c"
     break;
 
 
-#line 1328 "y.tab.c"
+#line 1329 "y.tab.c"
 
       default: break;
     }
@@ -1517,7 +1518,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 143 "parser.y"
+#line 144 "parser.y"
 
 
 int main(int argc, char** argv) {
@@ -1562,7 +1563,7 @@ int main(int argc, char** argv) {
     // Mensajes según el estado de compilación
     switch (estadoActual) {
         case CORRECTO: 
-            printf("\nProceso de compilacion termino exitosamente, codigo correcto sintacticamente\n"); 
+            printf("\nProceso de compilacion termino exitosamente, codigo correcto sintacticamente y lexicamente\n"); 
             break;
         case ERROR: 
             printf("\nErrores en la compilacion\n"); 
