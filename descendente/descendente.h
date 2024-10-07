@@ -77,7 +77,7 @@ void Generar(char *co, char *a, char *b, char *c);
 char *Extraer(REG_EXPRESION *preg);
 int Buscar(char *id, RegTS *TS, TOKEN *t);
 void Colocar(char *id, RegTS *TS);
-void Chequear(char *s);
+void RevisaEnTS(char *s);
 void Comenzar(void);
 void Terminar(void);
 void Asignar(REG_EXPRESION izq, REG_EXPRESION der);

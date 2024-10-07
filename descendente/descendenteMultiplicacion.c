@@ -160,25 +160,25 @@ void ListaExpresiones(void)
 
 void Expresion(REG_EXPRESION *presul)
 {
-    REG_EXPRESION op1, op2;
+    REG_EXPRESION operador1, operador2;
     char operador[MAX_OPERADOR];
 
-    Termino(&op1);
+    Termino(&operador1);
     while (1)
     {
         TOKEN t = ProximoToken();
         if (t == SUMA || t == RESTA || t == MULTIPLICACION || t == DIVISION)
         {
             Operador(operador);
-            Termino(&op2);
-            op1 = GenInfijo(op1, operador, op2);
+            Termino(&operador2);
+            operador1 = GenInfijo(operador1, operador, operador2);
         }
         else
         {
             break;
         }
     }
-    *presul = op1;
+    *presul = operador1;
 }
 
 void Termino(REG_EXPRESION *presul)
@@ -199,7 +199,7 @@ void Termino(REG_EXPRESION *presul)
             Operador(operador);
             // Procesar el siguiente factor
             Primaria(&factor2);
-            // Generar el código intermedio para la operación
+            // Generar el código intermedio para la operadoreración
             factor1 = GenInfijo(factor1, operador, factor2);
         }
         else
@@ -236,7 +236,7 @@ void Primaria(REG_EXPRESION *presul)
 
 void Operador(char *presul)
 {
-    /* <Operador> -> SUMA #procesar_op | RESTA #procesar_op | MULTIPLICACION #procesar_op */
+    /* <operador> -> SUMA #procesar_operador | RESTA #procesar_operador | MULTIPLICACION #procesar_operador */
     TOKEN t = ProximoToken();
     if (t == SUMA || t == RESTA || t == MULTIPLICACION || t == DIVISION)
     {
@@ -262,15 +262,15 @@ REG_EXPRESION ProcesarId(void)
 {
     /* Declara ID y construye el correspondiente registro semantico */
     REG_EXPRESION reg;
-    Chequear(buffer); // function auxiliar
+    RevisaEnTS(buffer); // function auxiliar
     reg.clase = ID;
     strcpy(reg.nombre, buffer);
     return reg;
 }
 
-char *ProcesarOp(void)
+char* ProcesarOp(void)
 {
-    /* Declara OP y construye el correspondiente registro semantico */
+    /* Declara operador y construye el correspondiente registro semantico */
     return buffer;
 }
 
@@ -286,34 +286,33 @@ void Escribir(REG_EXPRESION out)
     Generar("Write", Extraer(&out), "Entera", "");
 }
 
-REG_EXPRESION GenInfijo(REG_EXPRESION e1, char *op, REG_EXPRESION e2)
+REG_EXPRESION GenInfijo(REG_EXPRESION factor1, char *operador, REG_EXPRESION factor2)
 {
     /* Genera la instruccion para una operacion infija y construye un registro semantico con el resultado */
     REG_EXPRESION reg;
     static unsigned int numTemp = 1;
-    char cadTemp[TAMLEX] = "Temp&";
-    char cadNum[TAMLEX];
-    char cadOp[TAMLEX];
-    if (op[0] == '-')
-        strcpy(cadOp, "Restar");
-    else if (op[0] == '+')
-        strcpy(cadOp, "Sumar");
-    else if (op[0] == '*') 
-        strcpy(cadOp, "Multiplicar");
-    else if (op[0] == '/') 
-    {
-        strcpy(cadOp, "Dividir");
-    }
-    sprintf(cadNum, "%d", numTemp);
+    char cadenaTemporal[TAMLEX] = "Temp&";
+    char cadenaNumero[TAMLEX];
+    char cadenaOperador[TAMLEX];
+    if (operador[0] == '-')
+        strcpy(cadenaOperador, "Restar");
+    else if (operador[0] == '+')
+        strcpy(cadenaOperador, "Sumar");
+    else if (operador[0] == '*') 
+        strcpy(cadenaOperador, "Multiplicar");
+    else if (operador[0] == '/') 
+        strcpy(cadenaOperador, "Dividir");
+
+    sprintf(cadenaNumero, "%d", numTemp);
     numTemp++;
-    strcat(cadTemp, cadNum);
-    if (e1.clase == ID)
-        Chequear(Extraer(&e1));
-    if (e2.clase == ID)
-        Chequear(Extraer(&e2));
-    Chequear(cadTemp);
-    Generar(cadOp, Extraer(&e1), Extraer(&e2), cadTemp);
-    strcpy(reg.nombre, cadTemp);
+    strcat(cadenaTemporal, cadenaNumero);
+    if (factor1.clase == ID)
+        RevisaEnTS(Extraer(&factor1));
+    if (factor2.clase == ID)
+        RevisaEnTS(Extraer(&factor2));
+    RevisaEnTS(cadenaTemporal);
+    Generar(cadenaOperador, Extraer(&factor1), Extraer(&factor2), cadenaTemporal);
+    strcpy(reg.nombre, cadenaTemporal);
     return reg;
 }
 /***************Funciones Auxiliares**********************************/
@@ -351,10 +350,10 @@ void ErrorSintactico()
     printf("Error Sintactico\n");
 }
 
-void Generar(char *co, char *a, char *b, char *c)
+void Generar(char *codigoperacion, char *argumento1, char *argumento2, char *argumento3)
 {
     /* Produce la salida de la instruccion para la MV por stdout */
-    printf("%s %s%c%s%c%s\n", co, a, ',', b, ',', c);
+    printf("%s %s, %s, %s\n", codigoperacion, argumento1, argumento2, argumento3);
 }
 
 char *Extraer(REG_EXPRESION *preg)
@@ -393,7 +392,7 @@ void Colocar(char *id, RegTS *TS)
     }
 }
 
-void Chequear(char *s)
+void RevisaEnTS(char *s)
 {
     /* Si la cadena No esta en la Tabla de Simbolos la agrega,
        y si es el nombre de una variable genera la instruccion */
