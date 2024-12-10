@@ -1,4 +1,5 @@
-# Sintaxis
-Sintaxis G10
+# Sintaxis - utn frba - 2024
 
-Damian Marzocca
+Compilador ascendente (flex/bison)
+Compilador desdendente (C)
+Automata finito (c)
